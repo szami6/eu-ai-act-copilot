@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  LLM_PROVIDER: dummy
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Type-check
+        run: uv run mypy src
+
+      - name: Test
+        run: uv run pytest -v
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build CUDA-free api/ui image
+        run: docker build --build-arg GIT_SHA=${{ github.sha }} -t eu-ai-act-copilot:ci .
+
+      - name: Validate compose topology (all profiles)
+        run: docker compose --profile gpu --profile cpu --profile ingest config > /dev/null
