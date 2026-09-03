@@ -1,0 +1,15 @@
+# Fix for the WSL2 default-memory gotcha (PLAN.md §9 risk register): Docker
+# Desktop's WSL2 backend caps the VM at 50% of host RAM by default, which on
+# a 16 GB box (8 GB) is not enough headroom for vLLM to load an ~8.5 GB
+# model plus its own overhead — it will OOM at startup.
+#
+# Only needed if the GPU box runs Windows + Docker Desktop; skip entirely on
+# native Linux.
+#
+# 1. Copy this file to C:\Users\<you>\.wslconfig  (on Windows, NOT inside WSL)
+# 2. From PowerShell: wsl --shutdown
+# 3. Restart Docker Desktop
+
+[wsl2]
+memory=12GB
+swap=4GB

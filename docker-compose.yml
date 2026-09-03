@@ -1,0 +1,194 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.12.4
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      # The official qdrant/qdrant image ships neither curl nor wget, and
+      # /bin/sh is dash, not bash (both verified during the Phase 0 smoke
+      # test) — so this calls `bash` explicitly (CMD, not CMD-SHELL, which
+      # would run it through dash and silently break /dev/tcp) to issue a
+      # real HTTP request with no HTTP client binary available.
+      test:
+        - "CMD"
+        - "bash"
+        - "-c"
+        - >-
+          exec 3<>/dev/tcp/localhost/6333 &&
+          printf 'GET /healthz HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3 &&
+          head -1 <&3 | grep -q "200"
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+
+  api:
+    build:
+      context: .
+      args:
+        GIT_SHA: ${GIT_SHA:-local}
+    image: eu-ai-act-copilot:${GIT_SHA:-local}
+    command: ["uvicorn", "copilot.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: ${APP_ENV:-dev}
+      GIT_SHA: ${GIT_SHA:-local}
+      LLM_PROVIDER: ${LLM_PROVIDER:-dummy}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://llm-gpu:8000/v1}
+      LLM_API_KEY: ${LLM_API_KEY:-devkey}
+      LLM_MODEL: ${LLM_MODEL:-Qwen/Qwen3-8B-FP8}
+      QDRANT_URL: http://qdrant:6333
+    depends_on:
+      # Deliberately NOT depends_on: llm-gpu/llm-cpu (a deviation from the
+      # PLAN.md §9 sketch, made while implementing it): the LLM can be local
+      # under either profile, remote over the LAN (topology B), or absent
+      # (dummy provider) — none of which compose can express as a hard
+      # same-file dependency. Reachability is instead reported by /health,
+      # not enforced at startup (see copilot.api.main).
+      qdrant:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+
+  ui:
+    build:
+      context: .
+      args:
+        GIT_SHA: ${GIT_SHA:-local}
+    image: eu-ai-act-copilot:${GIT_SHA:-local}
+    command:
+      [
+        "streamlit", "run", "src/copilot/ui/app.py",
+        "--server.address=0.0.0.0", "--server.port=8501",
+      ]
+    ports:
+      - "8501:8501"
+    environment:
+      API_BASE_URL: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+
+  # --- GPU profile: the submission's actual inference tier (PLAN.md §4). ---
+  llm-gpu:
+    profiles: ["gpu"]
+    # PIN this during the Phase 0 GPU spike once a working tag is confirmed
+    # for the box's driver/CUDA version — Blackwell/sm_120 needs driver
+    # >= R570 and CUDA 12.8+ wheels (PLAN.md §9 risk register). Record the
+    # confirmed tag back into this file and into deploy/vllm.env's comment.
+    image: vllm/vllm-openai:latest
+    env_file:
+      - deploy/vllm.env
+    environment:
+      LLM_API_KEY: ${LLM_API_KEY:-devkey}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      # $$VAR (not $VAR): these must survive Compose's own interpolation
+      # pass untouched and be expanded by the *container's* shell instead,
+      # from the env_file above — a single `$` here gets silently
+      # interpolated (to blank, since these aren't host-shell vars) at
+      # `docker compose config` time before the container ever sees it.
+      - >
+        exec vllm serve "$$MODEL"
+        --host 0.0.0.0 --port 8000
+        --max-model-len "$$MAX_MODEL_LEN"
+        --gpu-memory-utilization "$$GPU_MEMORY_UTILIZATION"
+        --kv-cache-dtype "$$KV_CACHE_DTYPE"
+        --max-num-seqs "$$MAX_NUM_SEQS"
+        --enable-prefix-caching
+        --enable-auto-tool-choice --tool-call-parser hermes
+        --reasoning-parser qwen3
+        --swap-space 1
+        --api-key "$$LLM_API_KEY"
+    ports:
+      - "8001:8000"
+    volumes:
+      - hf_cache:/root/.cache/huggingface
+      - ./loadtest/reports:/tmp/bench
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["gpu"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+
+  # --- CPU profile: no-GPU fallback for reviewers without a GPU (PLAN.md
+  # §2.3 topology C). Slow; not the submission's serving path. ---
+  llm-cpu:
+    profiles: ["cpu"]
+    image: ghcr.io/ggml-org/llama.cpp:server
+    command:
+      - "-hf"
+      - "Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q4_K_M"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8000"
+      - "-c"
+      - "8192"
+    ports:
+      - "8001:8000"
+    volumes:
+      - llamacpp_cache:/root/.cache
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 60s
+
+  # --- One-shot corpus ingestion (Phase 1, PLAN.md §5). Stub through Phase 0
+  # so the profile is real and runnable from day one (see copilot.ingest). ---
+  ingest:
+    profiles: ["ingest"]
+    build:
+      context: .
+      args:
+        GIT_SHA: ${GIT_SHA:-local}
+    image: eu-ai-act-copilot:${GIT_SHA:-local}
+    command: ["python", "-m", "copilot.ingest"]
+    environment:
+      QDRANT_URL: http://qdrant:6333
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
+
+volumes:
+  qdrant_data:
+  hf_cache:
+  llamacpp_cache:
