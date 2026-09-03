@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env
+.env
+
+# Raw corpus sources are fetched and content-hash pinned by ingest (PLAN.md §5.1),
+# not committed. data/eval/*.yaml (the gold set, added in Phase 5) IS committed.
+data/raw/*
+!data/raw/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local Compose overrides
+docker-compose.override.yml
