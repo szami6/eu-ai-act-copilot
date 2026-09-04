@@ -1,0 +1,113 @@
+# Retrieval gold set for the RAG subgraph's Recall@5/Recall@10/MRR/nDCG@10
+# baseline (PLAN.md §3.2/§7.2: "Isolated harness, no LLM in the loop").
+#
+# Every `gold_chunk_ids` entry was verified against the live `ai_act_chunks`
+# collection (not guessed from the Act's structure) — each id's actual text
+# was fetched and read before being written here, so a low score means the
+# pipeline missed it, not that the label is wrong.
+#
+# `category` supports a per-category breakdown in `evals/run_eval.py`,
+# since the aggregate number alone hides *which* query shapes are weak.
+#
+# Entries 6/7 are near-duplicates on purpose: 7 is the literal phrasing that
+# `rag_graph_smoke.py` (a manual, non-pytest smoke test) found missing from
+# the top-5 entirely even on a raw-query-only dense+BM25+RRF run (dense:
+# absent from top-30, BM25: rank 12, RRF-fused: rank 24) — kept as its own
+# entry so this specific regression stays visible in the baseline rather
+# than being averaged away by its more naturally-phrased sibling.
+
+- query: What AI practices involving subliminal manipulation are prohibited under the AI Act?
+  category: prohibited_practice
+  gold_chunk_ids: [ai_act:art:5:1.a]
+
+- query: Is using AI to socially score individuals based on their behaviour banned?
+  category: prohibited_practice
+  gold_chunk_ids: [ai_act:art:5:1.c]
+
+- query: Can an AI system be used to predict whether someone will commit a crime based solely on profiling their personality?
+  category: prohibited_practice
+  gold_chunk_ids: [ai_act:art:5:1.d]
+
+- query: Under what conditions is an AI system considered high-risk under Article 6?
+  category: classification
+  gold_chunk_ids: [ai_act:art:6:1, ai_act:art:6:2]
+
+- query: Can a provider decide that its Annex III system is not actually high-risk, and what must it do in that case?
+  category: classification
+  gold_chunk_ids: [ai_act:art:6:4]
+
+- query: What does Annex III say about AI systems used in recruitment and employment decisions?
+  category: annex_iii
+  gold_chunk_ids: [ai_act:annex:III:4]
+
+- query: What does Annex III point 4 cover?
+  category: annex_iii
+  gold_chunk_ids: [ai_act:annex:III:4]
+
+- query: What does Annex III say about biometric identification systems?
+  category: annex_iii
+  gold_chunk_ids: [ai_act:annex:III:intro]
+
+- query: What does Annex III cover regarding law enforcement use of AI?
+  category: annex_iii
+  gold_chunk_ids: [ai_act:annex:III:6]
+
+- query: Why are AI systems used in the administration of justice and democratic processes classified as high-risk?
+  category: annex_iii
+  gold_chunk_ids: [ai_act:recital:61, ai_act:annex:III:8]
+
+- query: How does the AI Act define an "AI system"?
+  category: definition
+  gold_chunk_ids: [ai_act:def:ai-system]
+
+- query: Who counts as a "deployer" under the AI Act?
+  category: definition
+  gold_chunk_ids: [ai_act:def:deployer]
+
+- query: What is a "general-purpose AI model" under the AI Act?
+  category: definition
+  gold_chunk_ids: [ai_act:def:general-purpose-ai-model]
+
+- query: What is a biometric categorisation system?
+  category: definition
+  gold_chunk_ids: [ai_act:def:biometric-categorisation-system]
+
+- query: What transparency obligation applies when an AI system interacts directly with natural persons?
+  category: transparency
+  gold_chunk_ids: [ai_act:art:50:1]
+
+- query: Does a person have the right not to be subject to a decision based solely on automated processing under GDPR?
+  category: gdpr
+  gold_chunk_ids: [gdpr:art:22:1]
+
+- query: When must a controller carry out a data protection impact assessment under GDPR?
+  category: gdpr
+  gold_chunk_ids: [gdpr:art:35:1]
+
+- query: Is processing of data revealing political opinions or religious beliefs generally prohibited under GDPR?
+  category: gdpr
+  gold_chunk_ids: [gdpr:art:9:1]
+
+- query: What must deployers of high-risk AI systems do to comply with the instructions for use?
+  category: deployer_obligation
+  gold_chunk_ids: [ai_act:art:26:1]
+
+- query: What must providers of high-risk AI systems ensure before placing their system on the market?
+  category: provider_obligation
+  gold_chunk_ids: [ai_act:art:16:intro, ai_act:art:16:(f)]
+
+- query: What conformity assessment must a high-risk AI system undergo?
+  category: provider_obligation
+  gold_chunk_ids: [ai_act:art:16:(f)]
+
+- query: What must providers of general-purpose AI models document about their model?
+  category: gpai
+  gold_chunk_ids: [ai_act:art:53:1]
+
+- query: What is the maximum fine for using a prohibited AI practice?
+  category: penalty
+  gold_chunk_ids: [ai_act:art:99:3]
+
+- query: Who sets the rules on penalties for infringements of the AI Act?
+  category: penalty
+  gold_chunk_ids: [ai_act:art:99:1]

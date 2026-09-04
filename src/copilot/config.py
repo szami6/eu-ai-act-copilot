@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from enum import StrEnum
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -37,7 +38,23 @@ class Settings(BaseSettings):
     llm_request_timeout_s: float = 30.0
 
     # --- Retrieval backend (wired up in Phase 1) ---
-    qdrant_url: str = "http://qdrant:6333"
+    # `api`/`ingest` never actually read this default: compose's own
+    # `environment:` block sets the real `QDRANT_URL` (the compose-internal
+    # `http://qdrant:6333`) for both containers regardless of `.env`. This
+    # default is only ever consulted by host-run tools with no container
+    # around them (pytest, `make eval`/`run_eval.py`) — for those, Qdrant is
+    # reachable at its compose-published host port, not the container DNS
+    # name — so `.env.example` matches this value, not compose's.
+    qdrant_url: str = "http://localhost:6333"
+    # Where `ingest` writes raw docs + manifest.json and `/health` reads the
+    # manifest back from — one field so both agree even though they're
+    # different containers/processes (PLAN.md §2.3). The `api` service's
+    # compose entry mounts the same host `./data` read-only for this reason.
+    data_dir: Path = Path("data")
+    # Cross-encoder rerank is config-gated (PLAN.md §3.2 `rerank`): the
+    # ablation in §7.4 needs to turn it off, and §8.5 may move it to GPU —
+    # both start from this one flag rather than an env-specific branch.
+    rerank_enabled: bool = True
 
     # --- API service ---
     api_host: str = "0.0.0.0"
