@@ -29,6 +29,7 @@ dev = [
     "mypy>=1.13",
     "pytest-asyncio>=1.4.0",
     "pyyaml>=6.0",
+    "freezegun>=1.5.5",
 ]
 
 [tool.ruff]
