@@ -15,9 +15,12 @@ from collections.abc import Sequence
 from typing import Any
 
 from langchain_core.callbacks import CallbackManagerForLLMRun
+from langchain_core.language_models import LanguageModelInput
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import AIMessage, BaseMessage
 from langchain_core.outputs import ChatGeneration, ChatResult
+from langchain_core.runnables import Runnable, RunnableLambda, RunnableMap, RunnablePassthrough
+from pydantic import BaseModel
 
 from copilot.config import LLMProvider, Settings
 
@@ -25,6 +28,22 @@ _FIXTURES: list[tuple[re.Pattern[str], str]] = [
     (
         re.compile(r"\bhello\b|\bhi\b", re.IGNORECASE),
         "Hello! I'm running against the dummy LLM fixture.",
+    ),
+    (
+        # rag.graph.rewrite (Phase 1) — the exact variants don't matter under
+        # LLM_PROVIDER=dummy, only that this parses as a valid RewriteOutput.
+        re.compile(r"Rewrite this AI Act compliance question"),
+        '{"keyword_variant": "high-risk AI system requirements providers", '
+        '"legal_variant": "obligations applicable to providers of high-risk AI systems", '
+        '"hyde_passage": null}',
+    ),
+    (
+        # rag.graph.grade (Phase 1) — a fixed response can't name the real
+        # candidate ids it was shown, so it leaves `grades` empty; the node
+        # treats that as "pass everything through" rather than "grade
+        # everything irrelevant" (see graph.py's `grade`).
+        re.compile(r"Grade each candidate's relevance"),
+        '{"grades": [], "sufficient": true, "broadened_query": null}',
     ),
 ]
 _DEFAULT_RESPONSE = (
@@ -38,9 +57,10 @@ class DummyChatModel(BaseChatModel):
 
     Selected via `LLM_PROVIDER=dummy`. Lets graph-topology tests and a
     from-clone `make demo` run with no model download and no GPU (PLAN.md
-    §4.6). Response selection is a keyword match against `_FIXTURES`;
-    Phase 3 extends this table with structured-output and tool-call
-    fixtures once the orchestrator's node contracts are defined.
+    §4.6). Response selection is a keyword match against `_FIXTURES`; the
+    RAG subgraph's `rewrite`/`grade` nodes (Phase 1) and the orchestrator's
+    routing/planning nodes (Phase 3) extend this table as their prompts are
+    defined.
     """
 
     model_name: str = "dummy-llm"
@@ -69,6 +89,33 @@ class DummyChatModel(BaseChatModel):
         # orchestrator's tool contracts exist. Tools are accepted (so call
         # sites don't need a provider check) and ignored for now.
         return self
+
+    def with_structured_output(
+        self, schema: dict[str, Any] | type, *, include_raw: bool = False, **kwargs: Any
+    ) -> Runnable[LanguageModelInput, dict[str, Any] | BaseModel]:
+        """Parse the matched fixture's text as JSON for `schema` directly,
+        bypassing `BaseChatModel`'s default tool-calling-based machinery.
+
+        That default (see `langchain_core`) binds `schema` as a forced tool
+        call and parses the result out of the response's `.tool_calls` —
+        `bind_tools` above is a no-op stand-in, so `.tool_calls` is always
+        empty and that path always raises. A fixture matching a structured
+        prompt should return a JSON string valid for `schema`; real-provider
+        parity in shape (something invocable that yields a `schema`
+        instance) is what nodes depend on, not the parsing mechanism.
+        """
+        if not (isinstance(schema, type) and issubclass(schema, BaseModel)):
+            msg = "DummyChatModel.with_structured_output needs a Pydantic schema"
+            raise NotImplementedError(msg)
+
+        def _parse(message: BaseMessage) -> BaseModel:
+            return schema.model_validate_json(str(message.content))
+
+        if include_raw:
+            return RunnableMap(raw=self) | RunnablePassthrough.assign(
+                parsed=lambda d: _parse(d["raw"]), parsing_error=lambda _d: None
+            )
+        return self | RunnableLambda(_parse)
 
 
 def get_chat_model(settings: Settings) -> BaseChatModel:

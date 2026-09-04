@@ -1,6 +1,8 @@
 services:
   qdrant:
-    image: qdrant/qdrant:v1.12.4
+    # Pinned to match qdrant-client's version exactly (pyproject.toml) — the
+    # client warns/degrades when server and client minor versions drift.
+    image: qdrant/qdrant:v1.19.0
     ports:
       - "6333:6333"
     volumes:
@@ -45,6 +47,10 @@ services:
       LLM_API_KEY: ${LLM_API_KEY:-devkey}
       LLM_MODEL: ${LLM_MODEL:-Qwen/Qwen3-8B-FP8}
       QDRANT_URL: http://qdrant:6333
+    volumes:
+      # Read-only: `ingest` (its own profile/container) owns writing this
+      # tree; `api` only reads manifest.json back for /health.
+      - ./data:/app/data:ro
     depends_on:
       # Deliberately NOT depends_on: llm-gpu/llm-cpu (a deviation from the
       # PLAN.md §9 sketch, made while implementing it): the LLM can be local

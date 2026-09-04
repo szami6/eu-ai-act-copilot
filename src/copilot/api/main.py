@@ -6,6 +6,7 @@ built in Phase 4, once the orchestrator graph (Phase 3) exists to serve it.
 
 from __future__ import annotations
 
+import json
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
@@ -54,6 +55,20 @@ async def _check_qdrant(settings: Settings, client: httpx.AsyncClient) -> bool:
         return False
 
 
+def _read_corpus_manifest(settings: Settings) -> dict[str, object] | None:
+    """`None` before Phase 1 ingest has ever run, and also — like
+    `_check_llm`/`_check_qdrant` above — if `ingest` is mid-rewrite of this
+    same bind-mounted file when a request lands (compose lets a corpus
+    refresh run without taking `api` down), rather than 500ing `/health`
+    over a transient torn read.
+    """
+    manifest_path = settings.data_dir / "manifest.json"
+    try:
+        return json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
 @app.get("/health", response_model=HealthResponse)
 async def health(settings: Settings = Depends(get_settings)) -> HealthResponse:
     """Report service status without hard-failing on a down dependency.
@@ -71,5 +86,5 @@ async def health(settings: Settings = Depends(get_settings)) -> HealthResponse:
         llm_provider=settings.llm_provider,
         llm_reachable=await _check_llm(settings, client),
         qdrant_reachable=await _check_qdrant(settings, client),
-        corpus_manifest=None,
+        corpus_manifest=_read_corpus_manifest(settings),
     )
