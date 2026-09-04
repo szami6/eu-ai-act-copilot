@@ -1,0 +1,164 @@
+# Citation metadata for the risk-tier decision engine (risk_tier.py).
+#
+# Deliberately just labels/citations, not control flow: *which* rules fire
+# and in what order is the Act's own Art. 5 -> Art. 6(1)/Annex I ->
+# Art. 6(2)/Annex III -> Art. 6(3) derogation -> Art. 50 structure, which only
+# changes if the Regulation's own structure does, so that stays in Python
+# (classify_risk_tier). What genuinely gets amended piecemeal — e.g. Art.
+# 6(6)/6(7) explicitly let the Commission add to or remove from the Art. 6(3)
+# derogation conditions by delegated act, without touching Art. 6 itself — is
+# exactly the kind of change this file is meant to absorb without a code
+# change: add/edit an entry here, no redeploy of the decision logic.
+#
+# Every key below must have a matching member in the corresponding enum in
+# risk_tier.py — a KeyError at load time means the two have drifted.
+
+tiers:
+  prohibited:
+    label: "Prohibited (unacceptable risk)"
+    article: "Art. 5"
+  high_risk:
+    label: "High-risk"
+    article: "Art. 6"
+  limited_risk:
+    label: "Limited risk (transparency obligations)"
+    article: "Art. 50"
+  minimal_risk:
+    label: "Minimal risk"
+    article: null
+
+prohibited_practices:
+  subliminal_manipulation:
+    article: "Art. 5(1)(a)"
+    description: >-
+      Subliminal, manipulative, or deceptive techniques that materially
+      distort behaviour and cause or are reasonably likely to cause
+      significant harm
+  exploits_vulnerable_groups:
+    article: "Art. 5(1)(b)"
+    description: >-
+      Exploiting vulnerabilities due to age, disability, or a specific
+      social or economic situation to materially distort behaviour causing
+      significant harm
+  non_consensual_intimate_imagery:
+    article: "Art. 5(1)(ba)"
+    description: >-
+      Generating or manipulating realistic intimate-imagery content of an
+      identifiable person without their consent
+  csam_adjacent_content:
+    article: "Art. 5(1)(bb)"
+    description: >-
+      Generating or manipulating material referred to in Directive
+      2011/93/EU Article 2(c) or 2(e)
+  social_scoring:
+    article: "Art. 5(1)(c)"
+    description: >-
+      Evaluation or classification of persons based on social behaviour or
+      personal characteristics, leading to detrimental treatment in
+      unrelated contexts or disproportionate to the conduct
+  individual_crime_risk_profiling:
+    article: "Art. 5(1)(d)"
+    description: >-
+      Risk assessment to predict the likelihood of a natural person
+      committing a criminal offence based solely on profiling or
+      personality-trait assessment
+  untargeted_facial_scraping:
+    article: "Art. 5(1)(e)"
+    description: >-
+      Creating or expanding facial-recognition databases through untargeted
+      scraping of facial images from the internet or CCTV footage
+  workplace_education_emotion_inference:
+    article: "Art. 5(1)(f)"
+    description: "Inferring emotions in the workplace or education institutions"
+  biometric_categorization_protected_attributes:
+    article: "Art. 5(1)(g)"
+    description: >-
+      Biometric categorisation to infer race, political opinions,
+      trade-union membership, religious or philosophical beliefs, sex life,
+      or sexual orientation
+  realtime_rbi_law_enforcement_public_space:
+    article: "Art. 5(1)(h)"
+    description: >-
+      Real-time remote biometric identification in publicly accessible
+      spaces for law-enforcement purposes
+
+annex_iii_domains:
+  biometrics:
+    article: "Annex III, point 1"
+    description: "Remote biometric identification, biometric categorisation, or emotion recognition"
+  critical_infrastructure:
+    article: "Annex III, point 2"
+    description: >-
+      Safety components in the management and operation of critical digital
+      infrastructure, road traffic, or the supply of water, gas, heating, or
+      electricity
+  education_vocational_training:
+    article: "Annex III, point 3"
+    description: >-
+      Access or admission decisions, evaluation of learning outcomes,
+      assessment of the appropriate level of education, or exam monitoring
+      in education and vocational training
+  employment_worker_management:
+    article: "Annex III, point 4"
+    description: >-
+      Recruitment or candidate evaluation, or decisions on promotion,
+      termination, task allocation, or performance/behaviour monitoring of
+      workers
+  essential_services:
+    article: "Annex III, point 5"
+    description: >-
+      Eligibility for essential public benefits or services, creditworthiness,
+      life/health insurance risk pricing, or emergency-response dispatch
+      triage
+  law_enforcement:
+    article: "Annex III, point 6"
+    description: >-
+      Risk assessment of offending or reoffending, polygraph-like tools,
+      evaluation of evidence reliability, or profiling by or on behalf of
+      law-enforcement authorities
+  migration_asylum_border_control:
+    article: "Annex III, point 7"
+    description: >-
+      Polygraph-like tools, migration/health/security risk assessment,
+      examination of asylum/visa/residence applications, or identification
+      in migration and border-control management
+  justice_democratic_processes:
+    article: "Annex III, point 8"
+    description: >-
+      Assisting judicial research, interpretation, and application of the
+      law, or influencing the outcome of an election, referendum, or the
+      voting behaviour of natural persons
+
+derogation_grounds:
+  narrow_procedural_task:
+    article: "Art. 6(3)(a)"
+    description: "The system performs a narrow procedural task"
+  improves_completed_human_activity:
+    article: "Art. 6(3)(b)"
+    description: "The system improves the result of a previously completed human activity"
+  detects_deviation_with_human_review:
+    article: "Art. 6(3)(c)"
+    description: >-
+      The system detects decision-making patterns or deviations from prior
+      human decision-making, without replacing or influencing the
+      previously completed human assessment, and subject to proper human
+      review
+  preparatory_task_only:
+    article: "Art. 6(3)(d)"
+    description: "The system performs a task that is preparatory to an Annex III assessment"
+
+transparency_triggers:
+  direct_interaction:
+    article: "Art. 50(1)"
+    description: "The system is intended to interact directly with natural persons"
+  synthetic_content_generation:
+    article: "Art. 50(2)"
+    description: "The system generates synthetic audio, image, video, or text content"
+  emotion_or_biometric_categorization_disclosure:
+    article: "Art. 50(3)"
+    description: "The system is an emotion-recognition or biometric-categorisation system"
+  deepfake_or_public_interest_text:
+    article: "Art. 50(4)"
+    description: >-
+      The system generates or manipulates deep-fake content, or AI-generated
+      text published on matters of public interest
