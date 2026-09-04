@@ -56,6 +56,21 @@ class Settings(BaseSettings):
     # both start from this one flag rather than an env-specific branch.
     rerank_enabled: bool = True
 
+    # --- Orchestrator bounding (PLAN.md §3.1 "Bounding") ---
+    max_plan_steps: int = 4
+    max_verify_retries: int = 1
+    recursion_limit: int = 25
+    groundedness_threshold: float = 0.7
+    # Not given a figure in PLAN.md, unlike the four above. Chosen relative
+    # to `llm_request_timeout_s`: a turn can chain several sequential LLM
+    # calls (triage, planner, per-dependency-batch extraction, synthesize,
+    # verify, and a full repeat of the last three on one retry) whose
+    # *expected* latency is a few seconds each — 60s comfortably covers that
+    # common case while still being a real, user-facing bound. It is a wall
+    # clock the graph checks itself (`deadline_ts` in state), independent of
+    # any single call's own `llm_request_timeout_s`.
+    turn_deadline_s: float = 60.0
+
     # --- API service ---
     api_host: str = "0.0.0.0"
     api_port: int = 8000

@@ -45,6 +45,67 @@ _FIXTURES: list[tuple[re.Pattern[str], str]] = [
         re.compile(r"Grade each candidate's relevance"),
         '{"grades": [], "sufficient": true, "broadened_query": null}',
     ),
+    (
+        # agent.nodes.triage (Phase 3) — as with `rewrite` above, a fixed
+        # `normalized_query` can't reflect the real latest message; routing
+        # to "plan" exercises the deeper (planner -> execute) path by
+        # default rather than the shallower "direct" one.
+        re.compile(r"You triage one turn"),
+        '{"route": "plan", "normalized_query": "Is our CV screener high-risk and what are '
+        'our obligations?", "refusal_reason": null}',
+    ),
+    (
+        # agent.nodes.planner (Phase 3) — mirrors PLAN §1.4's own flagship
+        # composite example (classify_risk_tier -> compliance_timeline),
+        # chained with the extract/compliance-timeline fixtures below so a
+        # full dummy run exercises `execute`'s dependency-batching.
+        re.compile(r"Decompose this question into an ordered list"),
+        '{"subtasks": ['
+        '{"step_id": 0, "tool": "classify_risk_tier", "query": "An automated CV screening '
+        'system used by an employer to filter job applicants.", "depends_on": []}, '
+        '{"step_id": 1, "tool": "compliance_timeline", "query": "Compute the obligation '
+        'timeline for this system.", "depends_on": [0]}]}',
+    ),
+    (
+        # agent.tools.extract (Phase 3) — flags the employment domain so the
+        # planner fixture's step 0 lands on HIGH_RISK via Annex III, kept
+        # consistent with the compliance-timeline fixture below rather than
+        # the all-empty/MINIMAL_RISK default.
+        re.compile(r"Extract a structured feature vector from this description"),
+        '{"prohibited_practices": [], "claimed_exceptions": [], '
+        '"is_safety_component_of_regulated_product": false, '
+        '"requires_third_party_conformity_assessment": false, '
+        '"is_solely_non_safety_convenience_feature": false, "safety_relevant": false, '
+        '"annex_iii_domains": ["employment_worker_management"], '
+        '"performs_profiling_of_natural_persons": false, "derogation_grounds": [], '
+        '"transparency_triggers": []}',
+    ),
+    (
+        # agent.nodes.execute's compliance_timeline argument extraction
+        # (Phase 3) — tier/high_risk_basis match the extract fixture above
+        # (HIGH_RISK via Annex III) rather than re-deriving independently.
+        re.compile(r"Extract the arguments needed to compute a compliance timeline"),
+        '{"tier": "high_risk", "role": "provider", "placing_on_market_date": "2026-01-01", '
+        '"high_risk_basis": "annex_iii", "prohibited_practice": null, "is_gpai_model": false, '
+        '"is_public_authority": false, "is_large_scale_it_system_component": false, '
+        '"generates_synthetic_content": false}',
+    ),
+    (
+        # agent.nodes.synthesize (Phase 3) — free text, no schema; one
+        # citation marker so a dummy run has something for `verify`'s
+        # citation-resolvability check to actually resolve.
+        re.compile(r"Answer the question using only the passages"),
+        "Providers of high-risk AI systems must implement a risk management system "
+        "and maintain technical documentation before placing the system on the "
+        "market. [Art. 9(1)]",
+    ),
+    (
+        # agent.nodes.verify (Phase 3) — comfortably above the default
+        # groundedness_threshold (0.7) so a dummy run reaches `finalize`
+        # without needing the retry loop.
+        re.compile(r"Judge whether this draft answer is grounded"),
+        '{"groundedness": 0.85, "ungrounded_claims": [], "retry_query": null}',
+    ),
 ]
 _DEFAULT_RESPONSE = (
     "[dummy-llm] No real model is configured (LLM_PROVIDER=dummy). "
