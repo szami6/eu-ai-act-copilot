@@ -72,7 +72,8 @@ def _summarize_timeline(deadlines: list[ObligationDeadline]) -> str:
 
 
 async def _run_rag_search(subtask: SubTask, ctx: AgentContext) -> _StepResult:
-    result = await ctx.tools["rag_search"].ainvoke({"query": subtask.query, "k": 5})
+    k = ctx.settings.rag_default_k
+    result = await ctx.tools["rag_search"].ainvoke({"query": subtask.query, "k": k})
     assert isinstance(result, RagResult)
     record = ToolCallRecord(
         step_id=subtask.step_id,
