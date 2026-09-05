@@ -54,10 +54,16 @@ eval-generate:
 eval-judge:
 	uv run python -m evals.judge
 
-## End-to-end load test (Phase 6; locust scenario still to be added).
+## End-to-end load test (Phase 6; run from a client machine, not the SUT).
 ## Run from a machine that is NOT the system under test (PLAN.md §8.1).
 load:
-	uv run locust -f loadtest/locustfile.py
+	uv run locust -f loadtest/locustfile.py --csv=loadtest/reports/run
+
+metrics:
+	uv run python loadtest/collect_metrics.py --samples 60 --interval 5
+
+report:
+	uv run python loadtest/report.py
 
 ## Bring the stack up and confirm the api is answering.
 demo: up
