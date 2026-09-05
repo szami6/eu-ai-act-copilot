@@ -55,6 +55,10 @@ class Settings(BaseSettings):
     # ablation in §7.4 needs to turn it off, and §8.5 may move it to GPU —
     # both start from this one flag rather than an env-specific branch.
     rerank_enabled: bool = True
+    # `execute`'s implicit rag_search steps (and the UI's top-k slider,
+    # PLAN.md §6) read this rather than a literal — the one place both
+    # agree on the default without either hardcoding the other's number.
+    rag_default_k: int = 5
 
     # --- Orchestrator bounding (PLAN.md §3.1 "Bounding") ---
     max_plan_steps: int = 4
