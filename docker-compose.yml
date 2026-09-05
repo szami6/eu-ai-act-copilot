@@ -176,8 +176,7 @@ services:
       retries: 10
       start_period: 60s
 
-  # --- One-shot corpus ingestion (Phase 1, PLAN.md §5). Stub through Phase 0
-  # so the profile is real and runnable from day one (see copilot.ingest). ---
+  # --- One-shot corpus ingestion (Phase 1, PLAN.md §5). ---
   ingest:
     profiles: ["ingest"]
     build:
