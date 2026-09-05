@@ -5,11 +5,12 @@ article-level citations, classifies AI systems into regulatory risk tiers,
 and computes their compliance deadlines — built with LangGraph, served by
 vLLM, and evaluated end to end.
 
-> 🚧 **Status: Phase 0 (skeleton).** Repo scaffolding, configuration, the
-> Docker/Compose topology, and CI are in place; the RAG subgraph, agent
-> graph, tools, and UI land in the phases that follow. See
-> [PLAN.md](PLAN.md) for the full design, the phase-by-phase build plan,
-> and the reasoning behind every decision below. The original task brief
+> 🚧 **Status: Phase 5 foundation.** The ingestion pipeline, modular RAG
+> subgraph, deterministic tools, six-node agent graph, streaming API/UI, and
+> CI checks are implemented. The retrieval evaluator and the end-to-end
+> evaluation generation/judging foundation are now included; measured
+> real-model evaluation and load testing remain. See [PLAN.md](PLAN.md) for
+> the full design and phase-by-phase build plan. The original task brief
 > (Hungarian) is in [docs/](docs/).
 
 ## Quickstart
@@ -41,6 +42,9 @@ plain RAG.
 ```bash
 uv sync           # install dependencies (Python 3.11+)
 make check        # lint + type-check + test — exactly what CI runs
+
+make eval-generate  # run the 20-case end-to-end set and persist every output
+make eval-judge     # score the latest generation without rerunning the model
 ```
 
 ## Repository layout

@@ -23,7 +23,7 @@ down:
 build:
 	docker compose build
 
-## One-shot corpus ingestion (Phase 1 — not yet implemented). Requires qdrant to be up.
+## One-shot corpus ingestion (Phase 1). Requires qdrant to be up.
 ingest:
 	docker compose --profile ingest run --rm ingest
 
@@ -43,11 +43,18 @@ check: lint typecheck test
 bench:
 	bash loadtest/bench_inference.sh
 
-## Functional eval harness (Phase 5 — not yet implemented).
+## Isolated retrieval evaluation (requires an indexed corpus and qdrant).
 eval:
 	uv run python -m evals.run_eval
 
-## End-to-end load test (Phase 6 — not yet implemented).
+## End-to-end evaluation generation and deterministic report (Phase 5).
+eval-generate:
+	uv run python -m evals.generate
+
+eval-judge:
+	uv run python -m evals.judge
+
+## End-to-end load test (Phase 6; locust scenario still to be added).
 ## Run from a machine that is NOT the system under test (PLAN.md §8.1).
 load:
 	uv run locust -f loadtest/locustfile.py
