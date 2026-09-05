@@ -26,11 +26,8 @@ import streamlit as st
 
 from copilot.config import get_settings
 
-# One hand-written question per PLAN.md §7.1 eval category — the real
-# `data/eval/qa_set.yaml` is Phase 5's artifact and doesn't exist yet, but
-# the five-category taxonomy it will draw from is already fully specified,
-# so these chips exercise the same routing paths (refuse / tool / RAG /
-# abstain) without depending on a file this phase doesn't build.
+# One hand-written question per PLAN.md §7.1 evaluation category. The chips
+# remain local so the UI is useful before ingestion and without a live corpus.
 SAMPLE_QUESTIONS: list[tuple[str, str]] = [
     (
         "Single-hop factual",
