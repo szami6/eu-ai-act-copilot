@@ -36,6 +36,9 @@ class Settings(BaseSettings):
     llm_api_key: str = "devkey"
     llm_model: str = "Qwen/Qwen3-8B-FP8"
     llm_request_timeout_s: float = 30.0
+    llm_max_tokens: int | None = Field(
+        default=512, description="Upper bound on completion tokens per LLM call"
+    )
 
     # --- Retrieval backend (wired up in Phase 1) ---
     # `api`/`ingest` never actually read this default: compose's own

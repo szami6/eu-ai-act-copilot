@@ -94,7 +94,7 @@ _FIXTURES: list[tuple[re.Pattern[str], str]] = [
         # agent.nodes.synthesize (Phase 3) — free text, no schema; one
         # citation marker so a dummy run has something for `verify`'s
         # citation-resolvability check to actually resolve.
-        re.compile(r"Answer the question using only the passages"),
+        re.compile(r"Answer the question .*using only the passages"),
         "Providers of high-risk AI systems must implement a risk management system "
         "and maintain technical documentation before placing the system on the "
         "market. [Art. 9(1)]",
@@ -195,4 +195,5 @@ def get_chat_model(settings: Settings) -> BaseChatModel:
         model=settings.llm_model,
         temperature=0,
         timeout=settings.llm_request_timeout_s,
+        max_tokens=settings.llm_max_tokens,
     )

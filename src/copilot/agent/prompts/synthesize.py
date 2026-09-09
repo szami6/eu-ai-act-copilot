@@ -13,11 +13,12 @@ from pydantic import BaseModel
 from copilot.agent.state import ToolCallRecord
 from copilot.rag.state import Evidence
 
-_PROMPT_TEMPLATE = """Answer the question using only the passages and tool results below. Every \
+_PROMPT_TEMPLATE = """Answer the question concisely in 1-3 sentences using only the passages and tool results below. Every \
 sentence that states a fact must end with the article citation shown in that passage's header \
-or tool result, in the form [Art. X(y)] (or [Annex III, point N] / [Art. X, recital N] as \
-shown). If the passages and tool results do not contain enough to answer, say so plainly rather \
-than guessing — do not use any outside knowledge of the AI Act or GDPR.
+or tool result, formatted strictly in the form [Art. X(y)] or [Article X] or [Annex III, point N] (e.g. [Art. 5(1)(a)]). \
+Do not add other words like 'AI Act:' inside the citation bracket. \
+If the passages and tool results do not contain enough to answer, say so plainly rather \
+than guessing — do not use any outside knowledge of the AI Act or GDPR. Do not repeat whole passages verbatim.
 
 Question: "{query}"
 

@@ -1,0 +1,30 @@
+# Copy to .env and adjust. See PLAN.md §2.3 for the three deployment
+# topologies this single file supports (all-in-one GPU / split dev over the
+# LAN / no-GPU reviewer machine).
+
+APP_ENV=dev
+
+# --- LLM ---
+# `dummy`: no model needed, deterministic fixtures (PLAN.md §4.6) — the
+#          default; works with plain `make up`, no GPU or profile required.
+# `openai_compatible`: talks to vLLM (--profile gpu), llama.cpp (--profile
+#          cpu), or a remote vLLM over the LAN (topology B) — same protocol.
+LLM_PROVIDER=dummy
+
+# Match whichever backend you actually start:
+#   make up-gpu (--profile gpu)  -> http://llm-gpu:8000/v1
+#   make up-cpu (--profile cpu)  -> http://llm-cpu:8000/v1
+#   topology B: remote GPU box over the LAN -> http://<gpu-box-ip>:8001/v1
+LLM_BASE_URL=http://llm-gpu:8000/v1
+LLM_API_KEY=devkey
+LLM_MODEL=Qwen/Qwen3-8B-FP8
+
+# --- Retrieval (wired up in Phase 1) ---
+# Only consulted host-side (pytest, `make eval`) — the `api`/`ingest`
+# containers get the compose-internal http://qdrant:6333 directly from
+# docker-compose.yml's own `environment:` block, not from this file.
+QDRANT_URL=http://localhost:6333
+
+# --- Image tagging / reproducibility (PLAN.md §10) — set automatically by
+# the Makefile; override only if you know why. ---
+GIT_SHA=local
