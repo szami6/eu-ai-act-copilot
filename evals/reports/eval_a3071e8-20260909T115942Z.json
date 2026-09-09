@@ -1,0 +1,60 @@
+{
+  "input": "evals\\reports\\generation_a3071e8-20260909T115942Z.json",
+  "run_id": "a3071e8-20260909T115942Z",
+  "summary": {
+    "cases": 2.0,
+    "error_free_rate": 1.0,
+    "route_accuracy": 1.0,
+    "refusal_accuracy": 1.0,
+    "refusal_recall": 0.0,
+    "false_refusal_rate": 0.0,
+    "abstention_signal_rate": 0.0,
+    "must_include_rate": 0.0,
+    "must_not_include_rate": 1.0,
+    "citation_presence_rate": 0.0,
+    "citation_resolvability": 0.0,
+    "gold_evidence_recall": 1.0,
+    "tool_exact_match_rate": 0.0,
+    "mean_latency_ms": 135527.95
+  },
+  "cases": [
+    {
+      "id": "factual-01",
+      "error_free": true,
+      "route_correct": true,
+      "refusal_expected": false,
+      "refusal_correct": true,
+      "abstention_expected": false,
+      "abstention_signal": true,
+      "must_include": false,
+      "must_not_include": true,
+      "citation_expected": true,
+      "citation_present": false,
+      "citation_resolvability": 0.0,
+      "evidence_expected": true,
+      "gold_evidence_recall": 1.0,
+      "tool_expected": false,
+      "tool_output_exact": true,
+      "latency_ms": 106205.4
+    },
+    {
+      "id": "factual-02",
+      "error_free": true,
+      "route_correct": true,
+      "refusal_expected": false,
+      "refusal_correct": true,
+      "abstention_expected": false,
+      "abstention_signal": true,
+      "must_include": false,
+      "must_not_include": true,
+      "citation_expected": true,
+      "citation_present": false,
+      "citation_resolvability": 0.0,
+      "evidence_expected": true,
+      "gold_evidence_recall": 1.0,
+      "tool_expected": false,
+      "tool_output_exact": true,
+      "latency_ms": 164850.5
+    }
+  ]
+}

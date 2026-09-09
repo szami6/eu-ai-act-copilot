@@ -1,0 +1,2169 @@
+{
+  "schema_version": 1,
+  "run_id": "a3071e8-20260909T095519Z",
+  "generated_at": "2026-09-09T09:55:19.392567+00:00",
+  "git_sha": "a3071e8",
+  "dataset": {
+    "path": "data\\eval\\retrieval_gold.yaml",
+    "sha256": "98d975ec28346d8ca93080ec2612f77d2c40b64f84de1234a4014bdd1a53d189"
+  },
+  "corpus_manifest": {
+    "chunk_count": 1021,
+    "collection_name": "ai_act_chunks",
+    "created_at": "2026-09-09T08:50:00.263572+00:00",
+    "definitions_count": 55,
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "source_hashes": {
+      "ai_act:annex:1": "33667e1ff26836c638a706cbab417206203d702ed2c04b9bc20ef410f303b291",
+      "ai_act:annex:10": "561167a032f4dd2343f7064009b3f3da26ba79c3950c02c42dc0493e28c2e82a",
+      "ai_act:annex:11": "bac76aa9d758f3afeb4141e77e6a25688a7c575d945cb616dec11aec2d735ac0",
+      "ai_act:annex:12": "24b05ee0539eed5c281f0d9ba0bddcf17f8af37a6ccbb22dcb0a1cbbe04b5718",
+      "ai_act:annex:13": "2c3378dc77e7d188b3c8f0c293eb689de985ffd5448eb6b1c3e79a80d7e4df41",
+      "ai_act:annex:2": "c643b46a3bbe74af8b434a21477223c8f732262c9156396f1465cd619a1f1e6e",
+      "ai_act:annex:3": "9e08bc603397602aa1f1fc66bf49d898bbbfae37097687943905e7d83e06a329",
+      "ai_act:annex:4": "fb007fc458a9897f9edf9b95c571cbbb2f6a06caf7e53c3df167e427ef6b8969",
+      "ai_act:annex:5": "ed8cece121cc04369a3e9a966ff2bbbb21d46f4271da436a9037fea9edb7e3f4",
+      "ai_act:annex:6": "5e87ea7b4152a4a17cd662aee729afc9202770dbf838b2f15222b73ac144f474",
+      "ai_act:annex:7": "f4c69eda305578c78f126b3ad042c9f2a1ee3da6d4805d36275399e7395392b7",
+      "ai_act:annex:8": "156a5a342ee23047b318480292faeaa73ab2c07263d4b88e019ef1f7dcc8927f",
+      "ai_act:annex:9": "55d66df1cc37a5d02d8fd3b927cc3610499da490ecf4eda5ac8746eaac3a558f",
+      "ai_act:art:1": "d5d6746fe4ecb36f320ad34a4f9bbaeb7b3f4b063ee9dbf5996f0466fd65dce7",
+      "ai_act:art:10": "798577852307680f917469471c7b90de9513d665d3e11aa8a528043d2008c4d4",
+      "ai_act:art:100": "af04221bddd87585c58f54468442fbf03f2e8587ec5d4ceb2fb898579d7f76a9",
+      "ai_act:art:101": "2213b4fa77094d541e12c0cc10339f78ee0d15ddccc211ab498be477af0950b6",
+      "ai_act:art:102": "1f76d630bb219d8a9ab55229897900b2753687ba55f9f1d107442d9eee016a41",
+      "ai_act:art:103": "06872c9a253622c29975088763d7c1066361bfc16cd07aad702d6ca5b3b150b6",
+      "ai_act:art:104": "b1b57353a3736dfe67af5aeb1376694de0d267f0af0f8da0436a27fb50c197c3",
+      "ai_act:art:105": "199459860850c8b508a6e3d05dd51650639684052b6b43981d1fecb87689fe00",
+      "ai_act:art:106": "076ddf10e33e617454e2952889c8fb9293351828d9c94661aaff62add1b4dcb6",
+      "ai_act:art:107": "50ab91e9f801e364111ee2a9f170c855e6784a0a6ff44c4df442bdf26012a7c7",
+      "ai_act:art:108": "0f2bf02a698cc8df956b1329eaa857f25a0f4ad1fb58dc24ab876fcbbe251ea6",
+      "ai_act:art:109": "3b6547412ee29854ac1ec1cb3b3566f7582bcea13fb8529d0c62f17c8bb1933d",
+      "ai_act:art:11": "f1d1e5a9f9cd8221c6340c33f3cb3557fae57e6aa1390ec8b0abb976df2f9f15",
+      "ai_act:art:110": "bdd194b30faa527ecdcd254bfcfe7976a3f86fbe199d2f35eb2872cae7a9074d",
+      "ai_act:art:111": "06943cf0bc635314b8fa576711e68826485e7f968c6534c2a7a12e658e1ce092",
+      "ai_act:art:112": "11971519f84466ca96f72d35509d667e8c1562e713ca58c6d73ee4be0829a14b",
+      "ai_act:art:113": "a14bca1005b15cd0d9ebdfe5cd6459bcab78858936408ab10d338af93d4d7804",
+      "ai_act:art:12": "66866626c65c3c0b12bf915bc31ca1d9f3aaa898e06bad52a94b8c50468bbb91",
+      "ai_act:art:13": "c41902164a82349b3aa30cbbafc87f0c75005b98e19b19bac55b9d31098e35e2",
+      "ai_act:art:14": "aff83cdea5e60f31e6c621a5812ce17b8f1108d408a25c05a2c1102337ac6121",
+      "ai_act:art:15": "d98c7ea58845bd5f47b2c28551a9bc81cd550ca4fb6bc8c51b62b1b67f1369f0",
+      "ai_act:art:16": "f3a99a2809409b4c435fefd78e98952a0e6bc2afe1d76c00584e6cb4f33d2f30",
+      "ai_act:art:17": "a6c72805d516a0d5a6fbb92e2afbedc252f88d7f9c3e79fef7b324f71d142d2b",
+      "ai_act:art:18": "520a1abc9bcd4f6d64a4084e9c29ba7424cb28398e6ba16519126d53efea70d4",
+      "ai_act:art:19": "d69311070554b1e5648f50bd24f9e04907352aaa80e86699582c9d59818539ae",
+      "ai_act:art:2": "7673e837309c136c755b2cc990abb7c222b91c1a11eafb804347b6247f79375e",
+      "ai_act:art:20": "1fc06588776aa6e3a49f3127f47eb083d7e92fa671bb6bd0ed1b6b9d74973630",
+      "ai_act:art:21": "7594ed75206237d122ec70f751bc2665e1d8f4ffc211cbe2f98535cabea3f000",
+      "ai_act:art:22": "97585ef06ede9bd07b681ab795e5b89b3f88dd9c551b9a867123019ed39abeb8",
+      "ai_act:art:23": "1189109ef24f269cf85ef7d5c962d64cdc79463f2f4d625a1bd33df8fd058bd3",
+      "ai_act:art:24": "a9dab4fef7bb257f16329be45f17fb2b447654b5eede0ea0051f9f3b2be45c36",
+      "ai_act:art:25": "e7aec86f4cb298bb4dcca97363abb70b84c38dfe4f27004a3568e6517bab6a0f",
+      "ai_act:art:26": "e800414bb2f02e8306e0908d1235fb940d20dbcde2b8cef3992ee98838e72851",
+      "ai_act:art:27": "0b9a54fb74b3c591d31ff859e42811b5abc9ef2789a047d6186c5eb30909cde6",
+      "ai_act:art:28": "7bb83f1f18bb6432a4f41043ced8254f5b76521f6dc6c2c1236354358629c5c2",
+      "ai_act:art:29": "049aa752387e85d2a7f73e056d917b7e83bdb7a58f01138de793324b467b65c7",
+      "ai_act:art:3": "0f28fe03f1f463eff3966f2f49f06f3062159f38c7c94936b6160bbdaeec86e4",
+      "ai_act:art:30": "30bab05933138eab0a0c01c0ba98001ee5d26e9232e2b81b28b5604d95e18019",
+      "ai_act:art:31": "7234a72cad5b5dcf260d16c771e0397edef4ab82e4f40afd4bc15e8f5104606c",
+      "ai_act:art:32": "68bc1d0b7baa7ecc9775b591c458949e2f838f6ee70189dba23fd899b3a0af14",
+      "ai_act:art:33": "249ef6bb4c974c267f6bb09b0ff98509f5fd2c37042a4dbac99fe6344cee61b3",
+      "ai_act:art:34": "ec72b9d163606afa5c4ac475161bf129089f435cf2635be2e8f6f8d5ea969c92",
+      "ai_act:art:35": "d50e122c7cdccf84737bb69417bdeea22def83ab3a60f53ea781e60459443b6c",
+      "ai_act:art:36": "e9e6bb0a2e1ed1371a2745f9f20779ffaebf961c42cc2eebf9001048f5d2caad",
+      "ai_act:art:37": "dfade997f2481b120afdf9040ad8e4ff0ac4669916988da5b739e1827e6ce55d",
+      "ai_act:art:38": "1dd72a56217d199b80f8d2216e023799e9f9848f8bc4754a6c178fb0220a23eb",
+      "ai_act:art:39": "64d1209ec6d00e6c5b5f6c02e76bb31b4a416fab2f2071935f4887d06034f20b",
+      "ai_act:art:4": "2a31fc30a7b931bdcf52541d24165dc49118f117203312e481c468437b3590aa",
+      "ai_act:art:40": "a699a59ffc8ad4b408550c11547db2ddd0f6d056a136b4df913d9d4845eae69d",
+      "ai_act:art:41": "88a54394881ff70f93858588de9ac065d01560ee151811e121faa0c7f87128a6",
+      "ai_act:art:42": "881550d6378864685a2dee1f50e0e9c83d2be1cdabadf7c3093225770eef046c",
+      "ai_act:art:43": "cf82af67bc3c08549d6e1a683da37a6dd440589fa0a893f52007526b9c568cc4",
+      "ai_act:art:44": "616a0195d630eae3ef44e3947ee25f9460378cb4dcd094c487a8b347592d322c",
+      "ai_act:art:45": "baccafd037387b5fdc50d112a99df8a1ee9a157d4a594e7f273b65e1723f78a3",
+      "ai_act:art:46": "f16a56bd92951805bb28f66f517abdb2598fabb44fbbba5a9281655c6ae5c3b3",
+      "ai_act:art:47": "7d153337954005ed937ad6d5979d3c51ff30272816907af9830762e1d86dbf13",
+      "ai_act:art:48": "aa16f2775ab5de1dc532b2d7eea5e2bc185c45d174642ff236ab79dadb2a36b9",
+      "ai_act:art:49": "c153d98a9a8d386cb09a55af478724e163b1da93b8482d0bfbc18825572609c5",
+      "ai_act:art:5": "f766cdb8e32c2eb38e09030ba4c5399576a39dc58d9c8607ec6f9e414f817baa",
+      "ai_act:art:50": "afeb0bb3dec51502f2bfd98429058382cf9147beaa96505322bd22b2c3091d3b",
+      "ai_act:art:51": "e3ac2517a56e14240012f23c74064e795bcfc2dd0cd117eff704f00648f75338",
+      "ai_act:art:52": "6d9ebffa762b811b520b13a337a5436f1a1bcac4cde46f12d45c4b2837671caf",
+      "ai_act:art:53": "f7b7d72ed50e5c2b2983a583b6e89015ac011a61e18014defe8d1e1fcecf8915",
+      "ai_act:art:54": "44f6f16c0c3c28e6be78f44de271769ca1feaebe110a3c06b2a042e9687258b2",
+      "ai_act:art:55": "a611073de2297705bed330c924a161213575051d3cd37bedeacea8a014d63bb2",
+      "ai_act:art:56": "2d08394e2b80202bd226f0ad5e4c658125d1f675e437eba067d80833269eb511",
+      "ai_act:art:57": "b4cf99c4907b1c765feab51470b0a6374d716b7efc3fd3e96b6e2d44126ec64f",
+      "ai_act:art:58": "4fa63f017be5ecc1c357a5602ea6d4f19fd9f1706fc068ff4bca5841d877cba2",
+      "ai_act:art:59": "a7399a72b5e5c9efe90f88e4980ab0744b9061376e79fe89a8d45d016d0a5344",
+      "ai_act:art:6": "865bb2c5997b8e0bf436469f631f94b70e9f9bbf1e7353dd14d68956a7b65408",
+      "ai_act:art:60": "beefdaa91faaaa70af79e7c896e8ff273fca6a3377bd6722bc8a45d6ac1698cb",
+      "ai_act:art:61": "6ecaddd8c1a606fcf925fa8404a1bc3535015489d5bc364f9e4a2e3961d90248",
+      "ai_act:art:62": "a2a7a6890ef663801f741ab0ddc10a9c4d8b254f3d188a2975dea80e768d389d",
+      "ai_act:art:63": "e30000817137f8c4bc9efd4aa12ed768dc6136639f6604b1745b9b533f6929c1",
+      "ai_act:art:64": "e3b0bd8b3ac5df1d0d609592f8f6bf19428490b2932c99c96f5e5ef81103086a",
+      "ai_act:art:65": "d1dced796bd034e409085ecbffbf1271fe4ad68a3f0ba90e0f0dd1c503042767",
+      "ai_act:art:66": "171c17d8e54c93959500adaf28df07e5553c4bfba01af5ed8b7cf655c44348aa",
+      "ai_act:art:67": "21c61eeaa639b09690ef19350ae34008b25ffacb2e67b2de22ed513d4e70390e",
+      "ai_act:art:68": "ada6d91115c9da096ddf0a0a2dc14de07600ee9f3f0b8f5f8acc381605c17821",
+      "ai_act:art:69": "6fcc6ed291a57e7cdbf64e5acce71ddadd6523a8d79251b9d7e20db760280ada",
+      "ai_act:art:7": "c2dcb1f215acab9e70872ad5af0bb4640d42ffb6b7508ac92b1f8414416b60d7",
+      "ai_act:art:70": "7601c6944a8e382e522c10d2e66c33843fe72fdcda2506d5b8ce36792eace1a3",
+      "ai_act:art:71": "a1369dd234d40717c545c05e5704d9259b9c238864cc176df92d4e7637284fcb",
+      "ai_act:art:72": "b94c70995069c8bc8d8afd063991463ab3f2b9cc3e3049c49510899e0a7f3a1d",
+      "ai_act:art:73": "33af0362701a79a10975d748bb2be3603c9ffede0856604a385566ced2c20d2a",
+      "ai_act:art:74": "27ac360838c01a938e410bcb35759ef6d3bb2345ea19c8eef4786ae0d1566a62",
+      "ai_act:art:75": "3d4c7664d458b625e52ccd393689aa9df5b42f83575afa05ae8da6bb1b48a7cb",
+      "ai_act:art:76": "76741cdb5f4e3fb52dbc95a89f244c05531c805843d1c9e408847189129212d9",
+      "ai_act:art:77": "236f2360037e44357ef9cb9a013a7c1e44855ad4b316151722468355c375dafc",
+      "ai_act:art:78": "333961cd182429f72fea2a181e4f9e9527a368aa9b91033686d6974e94783b09",
+      "ai_act:art:79": "47c0e701009caf549021e3dd660563176f4c8194b9c4178f7c27f20b63c5232b",
+      "ai_act:art:8": "0ce194dc085a1ff4a3be4edba3728b2715042d66f60e4eaa6c5df119fa59517c",
+      "ai_act:art:80": "0271df00da019c72749b7a37590fd45a38c516c0950e6bda8ada83c1e0b48562",
+      "ai_act:art:81": "919e1f29f352c28ee3775040320810869304b129f53ca7b625104a076d1f205f",
+      "ai_act:art:82": "e0ffa08dcba9f719209f6325aceea710354e03e5746a77334cf0bd94a140868e",
+      "ai_act:art:83": "f08313db563b6f0dba9f13999f7469da7f860e80cbc740ee6924c72d620e07b0",
+      "ai_act:art:84": "f1664283e9dfa8bab2fc964352021a67a14d7876b8e6be6a729569443e55fdc3",
+      "ai_act:art:85": "49c1780065980c40c77849555a88693d10b8312585cfcfac152a1e576ea679eb",
+      "ai_act:art:86": "29cfe7b1243c703e1c3a2ddf3564b8a49471929c5b7fd059ea8ab02a6e761a78",
+      "ai_act:art:87": "f84d00355f49b24a870d447cce506f532ee61778e441e3218875fdf3fcb37ef4",
+      "ai_act:art:88": "42d00348f565ccb4c1675227ed9e20416d03010af2eddc1050fee024d03d821a",
+      "ai_act:art:89": "97a33deb8cd974fd7d295585d76ad16dd62538f35b58ab3eb2253171dde2082a",
+      "ai_act:art:9": "5624d1eaf8047d51bdd917759bb8c2a6150273fb776b1148f69f7613c79e1050",
+      "ai_act:art:90": "52f733c527c5df36756221531a723a5e9bf45f164f3d724b9b7204f4b996698f",
+      "ai_act:art:91": "a81fa2ac819ec83d2640205fb58862a59c5dd808613016be2b6baa4c2ab197b4",
+      "ai_act:art:92": "67f2d797f52dcbeb9a834c3d2cafab507aef1c7dd839b41f3d33dacb87c1f781",
+      "ai_act:art:93": "18266dc28c0ba94eacc3efc87dcb4e29d741991a51350b991013194388d63a56",
+      "ai_act:art:94": "bc5fde9ac513d2ed5f97c85c5cb2af6aa0047bce5ff43857578bbbd886a6ba75",
+      "ai_act:art:95": "1cf62e51aea822fde5d34bda68b8bbc361081499eebb78e31be454ac3b28d2fa",
+      "ai_act:art:96": "b125b492d7b0e09937e0d9b231523249c00ee3b41659d19029e9c2e584d2fa29",
+      "ai_act:art:97": "b5c0aabece49416cc1c45e07e6e078eefcfcdc11fc20d7150e4bb316b06c2255",
+      "ai_act:art:98": "b1644c9e49900eafab4ced90ac199c1ce8699563b32d4b6d6a58fb47f183e37c",
+      "ai_act:art:99": "1870d73ee53d0af99adfc47413d25367bdfb2f08632bdf11f57ccf6a15cb2c3c",
+      "ai_act:recital:1": "6f9960f0bc4e02a40be588a44dff7e254bf046be3516280b785c991c78b78ff6",
+      "ai_act:recital:10": "699fbb91aea779ea8251ae8b90ff71573cabf16df0b39dda0d848fab2749b1cc",
+      "ai_act:recital:100": "9bf4e75382176baaa90260b8208b6ae22c3c6a42d2c581818af9757b095b3621",
+      "ai_act:recital:101": "312c53d4580a5e1abb6740b0103b60e499a0ee3c690ca431aae24c4b4837c529",
+      "ai_act:recital:102": "30745aac0f7dc90e3375c0216fa58949600c0f94771772791e8616d4658779eb",
+      "ai_act:recital:103": "47ef1fa6977a2c8357f36cab1d59d1589ba5c1ff0bb79edacd673c3190adf2ed",
+      "ai_act:recital:104": "5c882822abe262e93ddd207a6a4838496ce7fff9252f7807853d7d969c32e0e2",
+      "ai_act:recital:105": "901424919be73067b74af095c031f37a35e03453005996b1302e0d0efde398e5",
+      "ai_act:recital:106": "15815e2cc13e2c53e31a60b9d20212f5647178a39c8fe9da498611ab58305762",
+      "ai_act:recital:107": "d5834c3cd18841e4dc4e447226e629a614c1a770a252496b43139c423018e0ea",
+      "ai_act:recital:108": "b071cd8d57ef68d6a32fff298062353fb8b2d21eaad97ee41d35500df73eea9b",
+      "ai_act:recital:109": "7136e590ebf4474e787f55d4d82e2d037d625e1ee03b01e83dfe6b41cdf4c433",
+      "ai_act:recital:11": "4fcd30ea17355950ebf78c998cc603e1650e91e3bd5625125f3b2a5cd102f7f8",
+      "ai_act:recital:110": "3c793b55c5f449f5f0d8a14de368cbdece402f587e49ac442b12dd5cc9672a12",
+      "ai_act:recital:111": "17ceee5db7839aff5fcaaaeae6312b763ed6d874d13c4ef50fe1c930fdce21a4",
+      "ai_act:recital:112": "7748c5d83ef73d78d72cf872f465148673cb80192563d0fff1010eb984f49727",
+      "ai_act:recital:113": "c60dfd0d383d06b855a0c88dbb09213ae712fd8629c7e131d51014d90f0126e0",
+      "ai_act:recital:114": "f26f307f6b7130839b609258f7ec14e58d356a0c1abbfcc25a70455adc815206",
+      "ai_act:recital:115": "c6622a2923dc9c9eca63b686e60a6cf3cefe81e45f326a99bc186d0e32bf370e",
+      "ai_act:recital:116": "4e6f4f48a8a2aa317e4413bf055519c9dec3caea20957cfee8f17bc4e23000f3",
+      "ai_act:recital:117": "f735d07ccad4b3e2131526b6a210b1271b884a68e4691d3a216c5c3b40d4ce91",
+      "ai_act:recital:118": "7ffeab82d9a143f1a237f4bafc1eaffe9c1af779cce4c4fbb9950e6c29068634",
+      "ai_act:recital:119": "6a96d93bc6fed8b880b683107bafdeef4a468a60bf97ff1ca80a61acb0a0e0b5",
+      "ai_act:recital:12": "73264253d309074d95ca12015665ed8bc49c5f45f3f4050d2a5b8695d7d7008e",
+      "ai_act:recital:120": "32c87ca92be237323c30546d534d1fdd543ca77cc2aa26142e8cc4e4ba375e71",
+      "ai_act:recital:121": "a44bd58d05a93a6e4e9d72d6f0838b4f063d3447d8c2d6ca82bc06a304a13749",
+      "ai_act:recital:122": "13352fdd3b12604bb464d649c0cc0792eba717ad7be9d9506a23cc246954b778",
+      "ai_act:recital:123": "b4ac12d0598b95cf8d27cb85effe7559cc31684cada04fd898310322d332a533",
+      "ai_act:recital:124": "1ac48183c9d9c217bcf104fe971122570e1b2aa26cc589b50d4e454eac52cfa0",
+      "ai_act:recital:125": "699430db592ea39998dd66432b9c5ec4587b6208d3b96c8d820c3e4d1311f26b",
+      "ai_act:recital:126": "b19fa972efdddd41b83e7503de87fb1caf89074e2f6b5955a91c0c148af61ad0",
+      "ai_act:recital:127": "542fc0b9d68956e99697a0556127eec103ef15f52f782be0d325e7488fb806ef",
+      "ai_act:recital:128": "10106711f0a8a9f2eec0016544d346bcbbe5d7a1f5ad0d2ab5f06784caca9259",
+      "ai_act:recital:129": "aef2de71b3d9449e9cf0313224b54a598835f64439ce3303b0ed8a641720bd0d",
+      "ai_act:recital:13": "c3c1f85460db1d2e6a99016e4d606610cf31e5616402c532df4398cb92081774",
+      "ai_act:recital:130": "6d78144919739f90ef08882ab5ee729409a5af8d51996dc9bb8b6d5af4a77e44",
+      "ai_act:recital:131": "588ec60ab381a7dc760c6287cac174f9b6701e1d51f7d43cf1b4d90ceed6b629",
+      "ai_act:recital:132": "34c744299e61710bb1b8c88f15e7ca94fbafa1138f9ea3247cfee085f1c013aa",
+      "ai_act:recital:133": "a5291e60048f667d8ed039b0ed8364655779366789690f91585aa28fd3321e3b",
+      "ai_act:recital:134": "b137fcc6ebbd13dbc074a121eeeb371453d008e0e932f989f14171ece432be23",
+      "ai_act:recital:135": "42aea1bbb7587c4d980908901f9f5cb87bbaf0384826914309b263d22a7142c2",
+      "ai_act:recital:136": "db854065234efa79893e106020e0777a986f5261da46fe867b25a95b684ad2bd",
+      "ai_act:recital:137": "db12c5f780e768c190d55ecf7129e827ac631daf7b0d7a85573370ab0aff2585",
+      "ai_act:recital:138": "29c3b187feecdef7bd566d65fc6f440c64e6ac22c541f2fdb4ff48c33b0353f5",
+      "ai_act:recital:139": "7fc7c54880f9f4097586a4c56f552dac9e61bcd67fb0103da2d27e1f99dc42df",
+      "ai_act:recital:14": "e54dc2475fd0c00d17fd83f5edcf50f2cfc7087658ea4556b928a51ae4eed576",
+      "ai_act:recital:140": "36415d756b4139b4f44145e1bf41bf665fa9c747cc9dddf416298d6d8a766fb9",
+      "ai_act:recital:141": "9da3dd09687e96c9dd55aa964265eae5c140cbbe734959b65f864b59aaba8dad",
+      "ai_act:recital:142": "46e74ed3d65510429eaee14a5b2a52b53a3c46d43b132f52a23a7a10b9f092b3",
+      "ai_act:recital:143": "9be684e7d4ef6b1fea971fa2ddf44b91a8453604e853be994e09780f066d7e15",
+      "ai_act:recital:144": "38fb90b49af3f1fd90c49a2418b8d78ff566c03d94c223923e642b26f79fc290",
+      "ai_act:recital:145": "6b169fec050422abcbe2a1c198775db54430bab3b2e3b79f7e2f38881239e6f7",
+      "ai_act:recital:146": "b23b4081e98a4a1a98521cca4125eb6bca6c32abf8717f6095f5b1bd35e80f17",
+      "ai_act:recital:147": "ab550a9082dfc0711816363c32a6a2b152c29953f0a5b79aea94271c412c187b",
+      "ai_act:recital:148": "b9a00220326ef37fb3780fcdb4de20ca2d3e5d2991d1b009b5a4935ad2a430c0",
+      "ai_act:recital:149": "da336ecfc1306496aac9c28a2b43e532c5fa58d7a2885c820999b57d1e3270fa",
+      "ai_act:recital:15": "01aac17b0787dc708da4bb06002722e56a4a4b0ad2563686059fb2d863ffe400",
+      "ai_act:recital:150": "53a51648f203bf28703ed7ac947226443fda88e0a8c8f6ec505d2d9755e4449c",
+      "ai_act:recital:151": "ebff299d3f9b24dab6c493cec33b3c025b10a209860fa7cc93dd615f3107b088",
+      "ai_act:recital:152": "df594d83fd153a3eb535228d3c4e9f27ab49c75579c920a06d4ab9c857666ed6",
+      "ai_act:recital:153": "cb6d13585daf7cb7defbfa1293a1c762b5fbd770e58e32681cacf2b585a50ce9",
+      "ai_act:recital:154": "62215208cb895281184d765bbc396a1a245657806bf6d2caf3209d292fab66f8",
+      "ai_act:recital:155": "31f3734f64da51f5a9b008c7b6b02055fbaf37a655b2999bcbf0a8ea07b1da08",
+      "ai_act:recital:156": "da2d17ab7c67c1a451bde5a67e01f2de9581f2bf20e60f7b2ba846df05d359d3",
+      "ai_act:recital:157": "9c460363e443bf540667e947ad6affccc79c19ab6c75e9055680ffb58bf82d6f",
+      "ai_act:recital:158": "47d1cc4545895461f1c364445d152c948f2ae2cb1e9b9d2223dcb870cde7d6c6",
+      "ai_act:recital:159": "9cee5bec4d23331487c562618148e0e47ad8cdbc02ac2dcaf2df08971652879f",
+      "ai_act:recital:16": "8f17eeaf6fafcb81e89354b1c40182b72b1a2557ac1adceaf1cb7e2e6bc4d7d7",
+      "ai_act:recital:160": "0250f0c9edd387360ed646a29ae3b8cfdc47fa07dff79be67f42756b0876dc3a",
+      "ai_act:recital:161": "9f0e74b994efc78bf6919fe42f7849107eb58eb29ab77fd5641338a5bfc362b2",
+      "ai_act:recital:162": "92492d43fd35d71a87fa6efb195119412a8eb14105c1025528410f94a87f4490",
+      "ai_act:recital:163": "b338e98f4575acfeb1702bdeeab1baa0be3cbae72b85c1b6ebdc3b41dc5b713c",
+      "ai_act:recital:164": "8fd0e96e0909a15936c7c68367b130be665970ed1d073bf34707d70be820ac0b",
+      "ai_act:recital:165": "54fef13506db48c1b15c4f2d931962df38886abf61aed630a174bdc312d0bce6",
+      "ai_act:recital:166": "02c737083fff2e1a1032fa17e252839d1b432cfb48e87cc00b605f43e58af8f4",
+      "ai_act:recital:167": "5ffdf4e970d893e4cbaa2af4c4e8cfb55a931fcd1cecb2485e319f257512edc8",
+      "ai_act:recital:168": "8b9959fddbfe1f1b6965417b453972daf0770b96eb260c9c5b75eaea12e0127d",
+      "ai_act:recital:169": "eafc74d0f651f69c7c3259be417e5215cea325b143298343719c4cc9f272c4f5",
+      "ai_act:recital:17": "464f6f509eaed89ae697c7c068de9cf5158bc231cba3c08023ad3f8c9a2c91cc",
+      "ai_act:recital:170": "711c4718f7ce4278c78ec94ab803ce45d29657b93183eb7578fe88cec90fb1eb",
+      "ai_act:recital:171": "9c95c1fc72920a05c290d717f049a894be6de5e9cbb8f75c5e0e72edeff178c5",
+      "ai_act:recital:172": "e3745148a86e2a374ecfb4ce5419fb59d5a3e921122adbec14857a5028dba1fc",
+      "ai_act:recital:173": "9213380bd54d0fa068c925db402a14f1eb38070b3a23e029ec3fce2758cd0f8e",
+      "ai_act:recital:174": "3552d6c7a31eafeb39de0f31651b237dd4097f94534684b77a609a151f84f40e",
+      "ai_act:recital:175": "ec905f6807bc8000cdc4d1145383b01afd115ed92ece0ce9c6f8d87e06ff9cbb",
+      "ai_act:recital:176": "30e73c32bda72009ad3754915b5def07272ddb3c6c1a94fa7d9729d1039d935f",
+      "ai_act:recital:177": "d24d8745f7aaf2e4b03cdc6566accf743600c0e33402b577ac80c0c543e4e4d1",
+      "ai_act:recital:178": "bb35141a6f23d660b2d9bfc3fad6f96173ca3b751de2caa1579e0d4e39b08a79",
+      "ai_act:recital:179": "331059689b2b87badba521a0535f014d7fb606673b061bb0ae8df9f9e38ed181",
+      "ai_act:recital:18": "c5c48f4e7d519ec3d81eaec03f90750711dd97052d43513cab470d51d06a2cf6",
+      "ai_act:recital:180": "cadf65ba8c13fe3c17df485a862fd47941a9ee9b516a7d1b76a3a23f43a3c115",
+      "ai_act:recital:19": "55fd02ae8807d241cdd0c87050aa5b240f1fe602b75b5909ef39585ed80126a8",
+      "ai_act:recital:2": "70794b83af370d4c6db2b6e55c0902104831fb86d1e8280ad2e2e4845b4ccea4",
+      "ai_act:recital:20": "d40b6c6dcd85b1f046b32bb8e9ea172e5164b51273f00806aea05eba6578bf01",
+      "ai_act:recital:21": "8ee999de29723b709cb717a3ffb7e9019feb27fca03f16e44a7667e76d156914",
+      "ai_act:recital:22": "3903572c2fde1a3691bf5c1fa1cf0b09a1e361490caf028ee2bd02cff374f3da",
+      "ai_act:recital:23": "2a776b270c5dba0c5a2bf21e13f031fa33a4a4f3966f3f02deea48a397cf671e",
+      "ai_act:recital:24": "6b83333670812b48ba45ea0493ecbc26dcc40cfb0a7ebff962e617bc061eef5d",
+      "ai_act:recital:25": "18b5e31c6d4d167c28637936f4839f0cad5aeb30b62f965a90dc850e9847995f",
+      "ai_act:recital:26": "4c9d3781d851a8b1e886c1379fb2a1ec69897a9953be9a20ef9b21cf7b5a73ad",
+      "ai_act:recital:27": "0e7d574c72060a700079ec42650d36197245cffa9512a1034201d502e3e0e26d",
+      "ai_act:recital:28": "48ac32579505b437e127a5dcec9de53969e6a190cdac0692b8c27cb403401623",
+      "ai_act:recital:29": "c1a16490ea456e13d7a620a38f0288c49092720b6a586b0352e5dfae76cd1800",
+      "ai_act:recital:3": "2c9d4062ef322ccbfbf3e4ef2cb60fc93d8a329e53aaaa7261876ab8ccb8a47e",
+      "ai_act:recital:30": "173dece59f30153093e6d4a452a07e7a81cc4d85dd5af4a42ed862fd6e235c2d",
+      "ai_act:recital:31": "8d27231506f5700fc50e65fd675fff4f19061e127254c7ac31395269ef3ec190",
+      "ai_act:recital:32": "6aa1017d7eaa7a0f624cc462f8adf6ad492e76db765f1d0114079af7e97a9d5c",
+      "ai_act:recital:33": "de44bf6ec7e5f6cac6d0926b7bbdecac9c2425e18c18c9db382c4ca2b56de5a9",
+      "ai_act:recital:34": "047da21bbe29ec682b71bd433272fd036a1ecf99070f0dbd0cc19df1f55f3334",
+      "ai_act:recital:35": "33b6becccc85fd6bbf8771c8bc0be629ef3ad86efe9e76d2363feb450610c54d",
+      "ai_act:recital:36": "9a42736e3c21fe8cd218fdbb6d434030d47a98496a03dfdd33c724c0bb4da08e",
+      "ai_act:recital:37": "90559993e971d5e69a5ea80942033048437a058e3e1235ca34e63aaa36ac58ef",
+      "ai_act:recital:38": "061795dbd8876414dd82c6a913059321014c538e13a3a0ff14913917907375ee",
+      "ai_act:recital:39": "e37f5eac87f67c667eb6affd77f1d2430e9d39e7929da6f8948e70b9f230df88",
+      "ai_act:recital:4": "cdb4b7838fb75370928fba0a2197008f589ef8c8c23e995626b00fafd3df882b",
+      "ai_act:recital:40": "61345b21bc62562141d33923ed7d2e1479d507c5c65b32dab2b6d8d2749b022f",
+      "ai_act:recital:41": "dee7fa0eb3ae60068cc0a64013b0dbd2c9df0455ec9025eb83376f6b8619fdd9",
+      "ai_act:recital:42": "e53ba3cdc0bcbc672dac54354d4ad7f10b59d61a2ad5f6e2da1e615532b0a947",
+      "ai_act:recital:43": "ed0ab339915bcca2e4bc7b4b02a25522132e97917a321b2faf44b4a84c56035a",
+      "ai_act:recital:44": "5cbae7de77d1eafc47e77e5e59fb2eccad62de8cc13e48ac5d1085fab8643c23",
+      "ai_act:recital:45": "c6ebc4750cbb861354eb9c390b728ad2d7a20940fa7b207a4043daca9f10bd5b",
+      "ai_act:recital:46": "efa724183d558592e9d1aaa2e263b4d59e7cab1f8da1088a28f8396f71a3cc5e",
+      "ai_act:recital:47": "54d8fcd18229d0f69db5ed885de0e5e840c85878d461445f29db7c970bf7a0bf",
+      "ai_act:recital:48": "13050a09f386faa9e13113c73c5e1d93cfedee9d8ee501970c0e26c36da32beb",
+      "ai_act:recital:49": "518d256bc841352de722de619aa2f958f53705b24943e1f2ac78f05ca2f54bb4",
+      "ai_act:recital:5": "f1604cfa2d951456d19edd6c6227ae46a2add72ac4761e05ec701a49be8b424f",
+      "ai_act:recital:50": "7aad6be89212ce09e1816b952f8238db83c31b2a6589b723cef92096e1732bef",
+      "ai_act:recital:51": "fa0775ff8634f4e8f0977e6fe1d18fb3689b3d53fb4df96e7bdef6fff02fcf24",
+      "ai_act:recital:52": "544a80b378168bf2e453ba8b94181869378ef61331ef0779ed661cd61a3a306c",
+      "ai_act:recital:53": "ea8bba2173f763bc74c19f9339a17f093c42e89f592141db13583a76c6011804",
+      "ai_act:recital:54": "2fe3f552bb323f2d612d7a46e28f1cddc25bda47f04d36ea78572b238bba51d4",
+      "ai_act:recital:55": "1128d8f4f6283552de7d68ce88f9d45a569f6dd8b4280788fd6c9fecc8368187",
+      "ai_act:recital:56": "6fa4ba811acc828145612cd5d6f517c0aec7b8c062cdd141354e4df55e85d9e8",
+      "ai_act:recital:57": "2620605d0453a8bd03e8018d9f923158636f0e6edea99acb39066fcd02ab5847",
+      "ai_act:recital:58": "46857300e1064d00818ac3def11ba474151c1729eb91a3bcc117d2883ab0bac1",
+      "ai_act:recital:59": "8c495e1602cd71d7b88d37bb88386e2c28a69ea8e47ce144191ea0cec51d41ee",
+      "ai_act:recital:6": "17d167af6a733778ff58db22f18c08a393ec019b6feba35064e257bbb93b49b2",
+      "ai_act:recital:60": "053caef59605b67c2aff0112ac9a21fa1257065d182cf27d8274ac0b050b6c86",
+      "ai_act:recital:61": "969ef941912c6f7f31c3ffa203266ea4cde33a528d09ec3b986a32f6d4846a94",
+      "ai_act:recital:62": "514d09a0c5c12225d71c3e00565e3c275d0f92c48bc03a6ecfc7bc11e283edcd",
+      "ai_act:recital:63": "88659b1e1f0b53adec29616e9767b56c71cb93b21d16b6f01d458716ebf0465a",
+      "ai_act:recital:64": "8749ccb8b277b51f4658979e7197fa24c8e4a97048e2dbe475e181da1a82331d",
+      "ai_act:recital:65": "f689c2cbfc34786203acb4292e2e5491344fc74430280d3cd711036d9eaeb5ef",
+      "ai_act:recital:66": "6465d096702abf1a04443cae1ea62fca32cd43adb671835bed0264bea88b4900",
+      "ai_act:recital:67": "1f41b0aec213ab6a6dc0fe03107dfb23273ee227af646047450982a87227bbd9",
+      "ai_act:recital:68": "d4a6e1e9078fb3c34dba61acd768a5daa5789e09079ee2c7ecb5e6250dd4f8bb",
+      "ai_act:recital:69": "34f0069c2d3452f72ee70cdc736fd0605d40b66f9b0c0bd56344508aff3cf2d9",
+      "ai_act:recital:7": "75892b7e94847c2eb262d2a9ba18904296d329a8e85726e64d1c6b048c36cfa8",
+      "ai_act:recital:70": "d50f7ecc95a1b5f8b01c2d4d6cc34657608ff3e39bb3b91845f01d694e4a2692",
+      "ai_act:recital:71": "401e3dc5bc00a2ac62e41c4d90ac9c1c978d8d9d0909f6f654a7aea9186b9c5e",
+      "ai_act:recital:72": "d8ee534ccf24314b4fd40e1006f7f1f1ff569a0b0e37e8364eb4b4457174d62e",
+      "ai_act:recital:73": "b5aa4d3d08f71b1a41f73c76fda74eafa2dbf0b6cb28465cb9f0381075a51e69",
+      "ai_act:recital:74": "785d5fa3e59314eda66453d49fe2dd4ad790b09a9bf3bdcbf4aa2d73c078902b",
+      "ai_act:recital:75": "140313302f390889d778fa6316582187d4261cffd0bf1289b1b095758cd0bcb6",
+      "ai_act:recital:76": "f163aa18422df381ad7730216b97f300d727bdf214345a292c7085f8ead2a9d7",
+      "ai_act:recital:77": "d82de5fc88884ccf7149add9578738613abf49ceabc3d63cde71671d2ff4ff21",
+      "ai_act:recital:78": "a41cd5dd72a056ea5b77af17475add06bd62fd7ac26d7aebd4cb067771ac2c1c",
+      "ai_act:recital:79": "ad4ab3908962ca7050ceef39e2f2fdb09c7bfca9cbb01421283aa8f74333bfe3",
+      "ai_act:recital:8": "96f922798f27eec15a27a86a33ec59456022308229085a1c0765502ea43f1606",
+      "ai_act:recital:80": "04efd371a88cf0a7050a3f358b770a45088a102e5defbcbb0ae4fe271c404d8c",
+      "ai_act:recital:81": "da2e2ea844a5b83a69676c8ef4b3e114b1766d2e03bfc6e38bdfc82583473b4d",
+      "ai_act:recital:82": "b1b348bf41ff405ba634744d6a1bf59b1419791ff2d64e429c2dc57f98bbbd8a",
+      "ai_act:recital:83": "97d8e7874d53f27b71b3746f21060fbbd5ea37ae20e36e65e90d25534feb1390",
+      "ai_act:recital:84": "b395db9d528691f4dd3781ed8edf6d119f6dd07792f85438d0fdf932d4959c05",
+      "ai_act:recital:85": "e90c03f5a2e00e848735e42fe0893b45d2f35344b27792f7da33020d52f62cad",
+      "ai_act:recital:86": "fe103bce5cc139721a03e80bac646305a0c63a83551af164119a445edfbeb145",
+      "ai_act:recital:87": "40bde2e8e93f78b2f597ef27d51ff9cdb8bdb6693f8d0fe4cd7091b8a9302540",
+      "ai_act:recital:88": "a47a03781b907385be2cfdcfd4ec93beadd22a995283506ca9bcecfe1db53a2a",
+      "ai_act:recital:89": "cd2e70c4ec6acd269311a6cbbdc804067815284f004ee3477c0024c2f713f8b6",
+      "ai_act:recital:9": "7359aa5d4aceeb26799adc27992524956f98d35aecd6fd0673fd40fc22353a11",
+      "ai_act:recital:90": "a78c9d069dd2df3829e2c22aa6e609d8a92419a1fa53eb82b0178a807edbe597",
+      "ai_act:recital:91": "1942953ea58ac8dd73aab6e6ed1c6c057d7af9e1bf2dfd87ec008c1a35aa42f3",
+      "ai_act:recital:92": "41164c05d401144d889d9a5bb71d11c78d4c91ceec1839863f75fcd8f9dece5c",
+      "ai_act:recital:93": "e4b568a7e37ca4233517a8c4f089f6db8005fae072ced165a59ae43d6abbb4d3",
+      "ai_act:recital:94": "9fcdff425e090764f6fc3cb5ccabe00e08f228709e1b235142a7e323760ba75b",
+      "ai_act:recital:95": "7c9c54b17aa3d649320ff9575c9223a14386f7f7fb8a8f896cba0369146f5bb4",
+      "ai_act:recital:96": "c361b1a39f6cc42673798a2f6df03d545ab5ac1e462ed55d0706c978c3e141fe",
+      "ai_act:recital:97": "40df255321723e1b13ae337639462ceb9fbe5b3b178ed1a9a47f2ae083b6eebc",
+      "ai_act:recital:98": "b63842bcd209fa9e782ff416247aaf2ec0617f82b07836c0ce67b0325dec6720",
+      "ai_act:recital:99": "c6f364dad5ceda114d0d003ceab4bda7d120be7ba5299908325565ebf18f2e52",
+      "gdpr:art:22": "61b7dcf4226336d7be51e95a05fe90a562a6d299e54d8d6a12e3dd42b943f44b",
+      "gdpr:art:35": "e2d1fbde5b086751500fe617b7ef0bb70c13d8fbf2d3dd392d94d36a0a0a9c6b",
+      "gdpr:art:5": "22e33b59c4f74887f4d302c4ccba1e067ad054b826d5c23ae6faecf4d151b288",
+      "gdpr:art:6": "c71195ff501872957db10828ee189f348d8a1d15dd494640a17a0fe4a7f93284",
+      "gdpr:art:9": "5821d75c845174d2551c6ccd6be8f914b434f67326b270f6bbdae8c9cb6dc8fb"
+    }
+  },
+  "settings": {
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "reranker_model": "BAAI/bge-reranker-base",
+    "top_k": 10
+  },
+  "summary": {
+    "cross_encoder": {
+      "recall@5": 0.875,
+      "recall@10": 0.9375,
+      "precision@5": 0.19166666666666668,
+      "mrr": 0.7907407407407407,
+      "ndcg@10": 0.8162697372969041
+    },
+    "mmr": {
+      "recall@5": 0.4583333333333333,
+      "recall@10": 0.5,
+      "precision@5": 0.10000000000000002,
+      "mrr": 0.4291666666666667,
+      "ndcg@10": 0.4397138728704366
+    },
+    "fusion_only": {
+      "recall@5": 0.7083333333333334,
+      "recall@10": 0.8541666666666666,
+      "precision@5": 0.15833333333333335,
+      "mrr": 0.5789351851851852,
+      "ndcg@10": 0.6416898040546384
+    }
+  },
+  "cases": [
+    {
+      "query": "What AI practices involving subliminal manipulation are prohibited under the AI Act?",
+      "cross_encoder": {
+        "query": "What AI practices involving subliminal manipulation are prohibited under the AI Act?",
+        "category": "prohibited_practice",
+        "gold_chunk_ids": [
+          "ai_act:art:5:1.a"
+        ],
+        "ranked_ids": [
+          "ai_act:art:5:1.a",
+          "ai_act:art:5:1.bb",
+          "ai_act:art:5:1.ba",
+          "ai_act:art:5:1a",
+          "ai_act:art:5:1.c",
+          "ai_act:art:5:1b",
+          "ai_act:art:5:1.g",
+          "ai_act:art:5:1.e",
+          "ai_act:art:5:1.b",
+          "ai_act:art:5:1.h"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "What AI practices involving subliminal manipulation are prohibited under the AI Act?",
+        "category": "prohibited_practice",
+        "gold_chunk_ids": [
+          "ai_act:art:5:1.a"
+        ],
+        "ranked_ids": [
+          "ai_act:art:5:1.a",
+          "ai_act:recital:29",
+          "ai_act:recital:134",
+          "ai_act:recital:170",
+          "ai_act:recital:32",
+          "ai_act:recital:28",
+          "ai_act:recital:43",
+          "ai_act:recital:45",
+          "ai_act:art:7:2.i",
+          "ai_act:art:10:6"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "fusion_only": {
+        "query": "What AI practices involving subliminal manipulation are prohibited under the AI Act?",
+        "category": "prohibited_practice",
+        "gold_chunk_ids": [
+          "ai_act:art:5:1.a"
+        ],
+        "ranked_ids": [
+          "ai_act:art:5:1.a",
+          "ai_act:art:5:1.ba",
+          "ai_act:art:5:1b",
+          "ai_act:recital:29",
+          "ai_act:art:5:1.b",
+          "ai_act:art:5:1.f",
+          "ai_act:art:5:1.e",
+          "ai_act:art:5:1.bb",
+          "ai_act:art:5:1a",
+          "ai_act:art:5:1.g"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "Is using AI to socially score individuals based on their behaviour banned?",
+      "cross_encoder": {
+        "query": "Is using AI to socially score individuals based on their behaviour banned?",
+        "category": "prohibited_practice",
+        "gold_chunk_ids": [
+          "ai_act:art:5:1.c"
+        ],
+        "ranked_ids": [
+          "ai_act:art:5:1.c",
+          "ai_act:recital:31",
+          "ai_act:recital:42",
+          "ai_act:art:5:1.b",
+          "ai_act:recital:44",
+          "ai_act:recital:57",
+          "ai_act:art:5:1.d",
+          "ai_act:art:5:1.g",
+          "ai_act:recital:30",
+          "ai_act:art:5:1.a"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "Is using AI to socially score individuals based on their behaviour banned?",
+        "category": "prohibited_practice",
+        "gold_chunk_ids": [
+          "ai_act:art:5:1.c"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:31",
+          "ai_act:recital:43",
+          "ai_act:annex:III:intro",
+          "ai_act:recital:28",
+          "ai_act:art:5:1.c",
+          "ai_act:recital:44",
+          "ai_act:art:3:61",
+          "ai_act:annex:III:4",
+          "ai_act:recital:29",
+          "ai_act:recital:30"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.2,
+        "ndcg@10": 0.38685280723454163
+      },
+      "fusion_only": {
+        "query": "Is using AI to socially score individuals based on their behaviour banned?",
+        "category": "prohibited_practice",
+        "gold_chunk_ids": [
+          "ai_act:art:5:1.c"
+        ],
+        "ranked_ids": [
+          "ai_act:art:5:1.c",
+          "ai_act:recital:31",
+          "ai_act:recital:42",
+          "ai_act:art:5:1.b",
+          "ai_act:art:5:1.d",
+          "ai_act:recital:29",
+          "ai_act:art:5:1.a",
+          "ai_act:recital:30",
+          "ai_act:annex:III:intro",
+          "ai_act:recital:142"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "Can an AI system be used to predict whether someone will commit a crime based solely on profiling their personality?",
+      "cross_encoder": {
+        "query": "Can an AI system be used to predict whether someone will commit a crime based solely on profiling their personality?",
+        "category": "prohibited_practice",
+        "gold_chunk_ids": [
+          "ai_act:art:5:1.d"
+        ],
+        "ranked_ids": [
+          "ai_act:art:5:1.d",
+          "ai_act:recital:42",
+          "ai_act:recital:59",
+          "ai_act:annex:III:6",
+          "ai_act:recital:54",
+          "ai_act:art:5:1.c",
+          "ai_act:recital:31",
+          "ai_act:def:substantial-modification",
+          "gdpr:art:22:1",
+          "ai_act:def:putting-into-service"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "Can an AI system be used to predict whether someone will commit a crime based solely on profiling their personality?",
+        "category": "prohibited_practice",
+        "gold_chunk_ids": [
+          "ai_act:art:5:1.d"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:42",
+          "ai_act:def:profiling",
+          "ai_act:art:3:39",
+          "ai_act:recital:98",
+          "ai_act:art:59:2",
+          "ai_act:recital:32",
+          "ai_act:annex:III:3",
+          "ai_act:recital:12",
+          "gdpr:art:22:1",
+          "ai_act:recital:30"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "Can an AI system be used to predict whether someone will commit a crime based solely on profiling their personality?",
+        "category": "prohibited_practice",
+        "gold_chunk_ids": [
+          "ai_act:art:5:1.d"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:42",
+          "ai_act:def:profiling",
+          "ai_act:art:5:1.d",
+          "ai_act:recital:59",
+          "ai_act:annex:III:6",
+          "ai_act:recital:133",
+          "ai_act:recital:32",
+          "ai_act:art:30:3",
+          "ai_act:recital:44",
+          "ai_act:recital:12"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.3333333333333333,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "query": "Under what conditions is an AI system considered high-risk under Article 6?",
+      "cross_encoder": {
+        "query": "Under what conditions is an AI system considered high-risk under Article 6?",
+        "category": "classification",
+        "gold_chunk_ids": [
+          "ai_act:art:6:1",
+          "ai_act:art:6:2"
+        ],
+        "ranked_ids": [
+          "ai_act:art:6:1",
+          "ai_act:art:6:2",
+          "ai_act:art:80:1",
+          "ai_act:art:2:13",
+          "ai_act:art:6:1a",
+          "ai_act:art:6:6",
+          "ai_act:art:6:8",
+          "ai_act:art:25:1.b",
+          "ai_act:art:71:1",
+          "ai_act:art:6:7"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.4,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "Under what conditions is an AI system considered high-risk under Article 6?",
+        "category": "classification",
+        "gold_chunk_ids": [
+          "ai_act:art:6:1",
+          "ai_act:art:6:2"
+        ],
+        "ranked_ids": [
+          "ai_act:art:2:2",
+          "ai_act:recital:61",
+          "ai_act:annex:VIII:intro2.5",
+          "ai_act:art:80:1",
+          "ai_act:art:26:6",
+          "ai_act:art:6:4",
+          "ai_act:recital:48",
+          "ai_act:art:6:5",
+          "ai_act:recital:55",
+          "ai_act:annex:III:intro"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "Under what conditions is an AI system considered high-risk under Article 6?",
+        "category": "classification",
+        "gold_chunk_ids": [
+          "ai_act:art:6:1",
+          "ai_act:art:6:2"
+        ],
+        "ranked_ids": [
+          "ai_act:art:6:6",
+          "ai_act:art:80:1",
+          "ai_act:art:2:2",
+          "ai_act:art:6:2",
+          "ai_act:annex:VIII:intro2.5",
+          "ai_act:art:6:1",
+          "ai_act:art:25:1.b",
+          "ai_act:art:71:1",
+          "ai_act:recital:51",
+          "ai_act:art:25:3"
+        ],
+        "recall@5": 0.5,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.25,
+        "ndcg@10": 0.48247555939075504
+      }
+    },
+    {
+      "query": "Can a provider decide that its Annex III system is not actually high-risk, and what must it do in that case?",
+      "cross_encoder": {
+        "query": "Can a provider decide that its Annex III system is not actually high-risk, and what must it do in that case?",
+        "category": "classification",
+        "gold_chunk_ids": [
+          "ai_act:art:6:4"
+        ],
+        "ranked_ids": [
+          "ai_act:art:6:4",
+          "ai_act:art:49:1",
+          "ai_act:art:60:2",
+          "ai_act:art:6:2",
+          "ai_act:art:73:9",
+          "ai_act:art:43:1",
+          "ai_act:art:27:1",
+          "ai_act:art:49:3",
+          "ai_act:art:43:2",
+          "ai_act:art:14:5"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "Can a provider decide that its Annex III system is not actually high-risk, and what must it do in that case?",
+        "category": "classification",
+        "gold_chunk_ids": [
+          "ai_act:art:6:4"
+        ],
+        "ranked_ids": [
+          "ai_act:art:6:4",
+          "ai_act:art:76:3",
+          "ai_act:art:52:5",
+          "ai_act:recital:126",
+          "ai_act:annex:VI:3",
+          "ai_act:recital:147",
+          "ai_act:art:7:3",
+          "ai_act:art:43:2",
+          "ai_act:art:60:2",
+          "ai_act:art:14:5"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "fusion_only": {
+        "query": "Can a provider decide that its Annex III system is not actually high-risk, and what must it do in that case?",
+        "category": "classification",
+        "gold_chunk_ids": [
+          "ai_act:art:6:4"
+        ],
+        "ranked_ids": [
+          "ai_act:art:6:4",
+          "ai_act:art:43:1",
+          "ai_act:art:6:6",
+          "ai_act:art:43:3",
+          "ai_act:recital:53",
+          "ai_act:art:43:2",
+          "ai_act:art:30:5",
+          "ai_act:art:60:2",
+          "ai_act:recital:61",
+          "ai_act:art:49:3"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "What does Annex III say about AI systems used in recruitment and employment decisions?",
+      "cross_encoder": {
+        "query": "What does Annex III say about AI systems used in recruitment and employment decisions?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:4"
+        ],
+        "ranked_ids": [
+          "ai_act:annex:III:4",
+          "ai_act:annex:III:3",
+          "ai_act:art:26:11",
+          "ai_act:recital:57",
+          "ai_act:annex:III:2",
+          "ai_act:annex:III:5",
+          "ai_act:art:60:2",
+          "ai_act:annex:III:7",
+          "ai_act:annex:III:8",
+          "ai_act:art:14:5"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "What does Annex III say about AI systems used in recruitment and employment decisions?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:4"
+        ],
+        "ranked_ids": [
+          "ai_act:annex:III:4",
+          "ai_act:art:43:2",
+          "ai_act:annex:III:7",
+          "ai_act:annex:XI:2",
+          "ai_act:recital:56",
+          "ai_act:annex:IV:3",
+          "ai_act:art:49:3",
+          "ai_act:art:12:3",
+          "ai_act:recital:53",
+          "ai_act:annex:III:8"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "fusion_only": {
+        "query": "What does Annex III say about AI systems used in recruitment and employment decisions?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:4"
+        ],
+        "ranked_ids": [
+          "ai_act:annex:III:4",
+          "ai_act:recital:57",
+          "ai_act:art:26:11",
+          "ai_act:annex:III:3",
+          "ai_act:annex:IV:3",
+          "ai_act:art:6:2",
+          "ai_act:art:7:1",
+          "ai_act:art:43:2",
+          "ai_act:art:49:1",
+          "ai_act:annex:VII:intro4.6."
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "What does Annex III point 4 cover?",
+      "cross_encoder": {
+        "query": "What does Annex III point 4 cover?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:4"
+        ],
+        "ranked_ids": [
+          "ai_act:annex:III:4",
+          "ai_act:annex:IV:2.b",
+          "ai_act:annex:IV:3",
+          "ai_act:annex:IV:6",
+          "ai_act:annex:IV:2.e",
+          "ai_act:annex:VIII:intro2.3",
+          "ai_act:annex:VIII:3",
+          "ai_act:annex:IV:4",
+          "ai_act:art:78:3",
+          "ai_act:annex:III:8"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "What does Annex III point 4 cover?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:4"
+        ],
+        "ranked_ids": [
+          "ai_act:annex:VII:intro4.1.",
+          "ai_act:annex:II:intro",
+          "ai_act:art:78:4",
+          "ai_act:annex:XIII:(f)",
+          "ai_act:annex:VIII:intro3.3",
+          "ai_act:annex:XI:intro2.3",
+          "ai_act:annex:IV:6",
+          "ai_act:annex:IV:4",
+          "ai_act:art:11:3",
+          "ai_act:art:49:4"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "What does Annex III point 4 cover?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:4"
+        ],
+        "ranked_ids": [
+          "ai_act:annex:VII:intro4.3.",
+          "ai_act:art:49:4",
+          "ai_act:annex:VIII:intro2.3",
+          "ai_act:annex:IV:4",
+          "ai_act:art:6:4",
+          "ai_act:annex:VI:3",
+          "ai_act:annex:VII:intro4.1.",
+          "ai_act:annex:VII:intro4.2.",
+          "ai_act:art:60:4.c",
+          "ai_act:art:43:2"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      }
+    },
+    {
+      "query": "What does Annex III say about biometric identification systems?",
+      "cross_encoder": {
+        "query": "What does Annex III say about biometric identification systems?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:intro"
+        ],
+        "ranked_ids": [
+          "ai_act:def:biometric-identification",
+          "ai_act:annex:III:intro",
+          "ai_act:art:14:5",
+          "ai_act:art:3:35",
+          "ai_act:recital:33",
+          "ai_act:art:5:3",
+          "ai_act:recital:34",
+          "ai_act:art:5:4",
+          "ai_act:art:12:3",
+          "ai_act:recital:35"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.5,
+        "ndcg@10": 0.6309297535714575
+      },
+      "mmr": {
+        "query": "What does Annex III say about biometric identification systems?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:intro"
+        ],
+        "ranked_ids": [
+          "ai_act:art:5:3",
+          "ai_act:annex:VIII:intro2.3",
+          "ai_act:annex:X:intro3",
+          "ai_act:art:3:43",
+          "ai_act:art:12:3",
+          "ai_act:art:14:5",
+          "ai_act:recital:14",
+          "ai_act:recital:36",
+          "ai_act:recital:95",
+          "ai_act:annex:III:intro"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 1.0,
+        "precision@5": 0.0,
+        "mrr": 0.1,
+        "ndcg@10": 0.2890648263178879
+      },
+      "fusion_only": {
+        "query": "What does Annex III say about biometric identification systems?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:intro"
+        ],
+        "ranked_ids": [
+          "ai_act:annex:III:intro",
+          "ai_act:art:5:3",
+          "ai_act:art:3:43",
+          "ai_act:recital:95",
+          "ai_act:recital:17",
+          "ai_act:recital:14",
+          "ai_act:art:3:42",
+          "ai_act:art:5:4",
+          "ai_act:recital:34",
+          "ai_act:art:3:35"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "What does Annex III cover regarding law enforcement use of AI?",
+      "cross_encoder": {
+        "query": "What does Annex III cover regarding law enforcement use of AI?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:6"
+        ],
+        "ranked_ids": [
+          "ai_act:annex:III:6",
+          "ai_act:art:26:11",
+          "ai_act:art:78:3",
+          "ai_act:art:74:8",
+          "ai_act:annex:III:8",
+          "ai_act:art:74:10",
+          "ai_act:art:14:5",
+          "ai_act:art:75:1",
+          "ai_act:annex:VIII:11",
+          "ai_act:recital:33"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "What does Annex III cover regarding law enforcement use of AI?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:6"
+        ],
+        "ranked_ids": [
+          "ai_act:annex:III:6",
+          "ai_act:annex:VI:3",
+          "ai_act:art:78:3",
+          "ai_act:art:13:3.e",
+          "ai_act:art:12:3",
+          "ai_act:art:49:3",
+          "ai_act:annex:IV:3",
+          "ai_act:recital:32",
+          "ai_act:annex:III:8",
+          "ai_act:art:2:4"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "fusion_only": {
+        "query": "What does Annex III cover regarding law enforcement use of AI?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:annex:III:6"
+        ],
+        "ranked_ids": [
+          "ai_act:art:78:3",
+          "ai_act:art:26:11",
+          "ai_act:annex:III:6",
+          "ai_act:art:74:8",
+          "ai_act:art:75:1",
+          "ai_act:art:43:2",
+          "ai_act:art:49:3",
+          "ai_act:art:7:1",
+          "ai_act:art:5:1.g",
+          "ai_act:annex:IV:3"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.3333333333333333,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "query": "Why are AI systems used in the administration of justice and democratic processes classified as high-risk?",
+      "cross_encoder": {
+        "query": "Why are AI systems used in the administration of justice and democratic processes classified as high-risk?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:recital:61",
+          "ai_act:annex:III:8"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:61",
+          "ai_act:recital:58",
+          "ai_act:recital:52",
+          "ai_act:recital:57",
+          "ai_act:recital:56",
+          "ai_act:recital:62",
+          "ai_act:recital:55",
+          "ai_act:recital:54",
+          "ai_act:art:6:1a",
+          "ai_act:recital:60"
+        ],
+        "recall@5": 0.5,
+        "recall@10": 0.5,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 0.6131471927654584
+      },
+      "mmr": {
+        "query": "Why are AI systems used in the administration of justice and democratic processes classified as high-risk?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:recital:61",
+          "ai_act:annex:III:8"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:61",
+          "ai_act:art:15:1",
+          "ai_act:annex:III:intro",
+          "ai_act:annex:III:8",
+          "ai_act:recital:56",
+          "ai_act:recital:5",
+          "ai_act:recital:88",
+          "ai_act:recital:55",
+          "ai_act:art:80:1",
+          "ai_act:recital:120"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.4,
+        "mrr": 1.0,
+        "ndcg@10": 0.8772153153380493
+      },
+      "fusion_only": {
+        "query": "Why are AI systems used in the administration of justice and democratic processes classified as high-risk?",
+        "category": "annex_iii",
+        "gold_chunk_ids": [
+          "ai_act:recital:61",
+          "ai_act:annex:III:8"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:61",
+          "ai_act:annex:III:8",
+          "ai_act:recital:54",
+          "ai_act:recital:59",
+          "ai_act:art:74:8",
+          "ai_act:recital:52",
+          "ai_act:recital:93",
+          "ai_act:art:6:1a",
+          "ai_act:recital:159",
+          "ai_act:art:14:1"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.4,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "How does the AI Act define an \"AI system\"?",
+      "cross_encoder": {
+        "query": "How does the AI Act define an \"AI system\"?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:ai-system"
+        ],
+        "ranked_ids": [
+          "ai_act:def:ai-system",
+          "ai_act:art:3:intro",
+          "ai_act:def:placing-on-the-market",
+          "ai_act:def:testing-in-real-world-conditions",
+          "ai_act:def:substantial-modification",
+          "ai_act:def:testing-data",
+          "ai_act:def:putting-into-service",
+          "ai_act:def:input-data",
+          "ai_act:def:training-data",
+          "ai_act:def:intended-purpose"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "How does the AI Act define an \"AI system\"?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:ai-system"
+        ],
+        "ranked_ids": [
+          "ai_act:art:3:intro",
+          "ai_act:art:80:6",
+          "ai_act:art:7:2.d",
+          "ai_act:annex:IV:2.c",
+          "ai_act:art:2:12",
+          "ai_act:art:3:66",
+          "ai_act:recital:12",
+          "ai_act:def:reasonably-foreseeable-misuse",
+          "ai_act:def:biometric-categorisation-system",
+          "ai_act:art:3:57"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "How does the AI Act define an \"AI system\"?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:ai-system"
+        ],
+        "ranked_ids": [
+          "ai_act:def:testing-in-real-world-conditions",
+          "ai_act:annex:IV:2.c",
+          "ai_act:def:placing-on-the-market",
+          "ai_act:recital:91",
+          "ai_act:annex:IV:2.a",
+          "ai_act:recital:100",
+          "ai_act:def:testing-data",
+          "ai_act:def:substantial-modification",
+          "ai_act:def:putting-into-service",
+          "ai_act:def:input-data"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      }
+    },
+    {
+      "query": "Who counts as a \"deployer\" under the AI Act?",
+      "cross_encoder": {
+        "query": "Who counts as a \"deployer\" under the AI Act?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:deployer"
+        ],
+        "ranked_ids": [
+          "ai_act:art:3:4",
+          "ai_act:recital:13",
+          "ai_act:art:3:8",
+          "ai_act:art:26:12",
+          "ai_act:art:25:1.b",
+          "ai_act:art:4:1",
+          "ai_act:art:25:1.a",
+          "ai_act:art:26:8",
+          "ai_act:def:deployer",
+          "ai_act:art:26:7"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 1.0,
+        "precision@5": 0.0,
+        "mrr": 0.1111111111111111,
+        "ndcg@10": 0.3010299956639812
+      },
+      "mmr": {
+        "query": "Who counts as a \"deployer\" under the AI Act?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:deployer"
+        ],
+        "ranked_ids": [
+          "ai_act:art:3:4",
+          "ai_act:art:50:6",
+          "ai_act:annex:VIII:intro3.1",
+          "ai_act:art:2:9",
+          "ai_act:art:49:3",
+          "ai_act:art:3:5",
+          "ai_act:art:26:2",
+          "ai_act:art:73:4",
+          "ai_act:art:26:4",
+          "ai_act:recital:79"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "Who counts as a \"deployer\" under the AI Act?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:deployer"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:13",
+          "ai_act:art:3:4",
+          "ai_act:def:deployer",
+          "ai_act:art:86:1",
+          "ai_act:art:26:2",
+          "ai_act:art:71:3",
+          "ai_act:art:25:1.a",
+          "ai_act:art:25:1.b",
+          "ai_act:def:putting-into-service",
+          "ai_act:art:7:2.h"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.3333333333333333,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "query": "What is a \"general-purpose AI model\" under the AI Act?",
+      "cross_encoder": {
+        "query": "What is a \"general-purpose AI model\" under the AI Act?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:general-purpose-ai-model"
+        ],
+        "ranked_ids": [
+          "ai_act:art:3:66",
+          "ai_act:recital:97",
+          "ai_act:def:general-purpose-ai-model",
+          "ai_act:recital:100",
+          "ai_act:annex:XI:1",
+          "ai_act:art:51:1",
+          "ai_act:annex:XII:intro",
+          "ai_act:art:51:2",
+          "ai_act:recital:110",
+          "ai_act:recital:111"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.3333333333333333,
+        "ndcg@10": 0.5
+      },
+      "mmr": {
+        "query": "What is a \"general-purpose AI model\" under the AI Act?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:general-purpose-ai-model"
+        ],
+        "ranked_ids": [
+          "ai_act:art:3:66",
+          "ai_act:recital:109",
+          "ai_act:art:90:1",
+          "ai_act:recital:111",
+          "ai_act:annex:XII:intro",
+          "ai_act:art:92:5",
+          "ai_act:art:92:3",
+          "ai_act:recital:101",
+          "ai_act:art:54:6",
+          "ai_act:recital:97"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "What is a \"general-purpose AI model\" under the AI Act?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:general-purpose-ai-model"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:112",
+          "ai_act:art:3:66",
+          "ai_act:recital:97",
+          "ai_act:art:52:2",
+          "ai_act:art:92:1",
+          "ai_act:def:general-purpose-ai-model",
+          "ai_act:art:53:2",
+          "ai_act:recital:113",
+          "ai_act:art:54:6",
+          "ai_act:art:51:1"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 1.0,
+        "precision@5": 0.0,
+        "mrr": 0.16666666666666666,
+        "ndcg@10": 0.3562071871080222
+      }
+    },
+    {
+      "query": "What is a biometric categorisation system?",
+      "cross_encoder": {
+        "query": "What is a biometric categorisation system?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:biometric-categorisation-system"
+        ],
+        "ranked_ids": [
+          "ai_act:art:3:40",
+          "ai_act:def:biometric-categorisation-system",
+          "ai_act:recital:16",
+          "ai_act:recital:30",
+          "ai_act:art:50:3",
+          "ai_act:art:5:1.g",
+          "ai_act:recital:54",
+          "ai_act:annex:III:intro",
+          "ai_act:def:biometric-data",
+          "ai_act:def:emotion-recognition-system"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.5,
+        "ndcg@10": 0.6309297535714575
+      },
+      "mmr": {
+        "query": "What is a biometric categorisation system?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:biometric-categorisation-system"
+        ],
+        "ranked_ids": [
+          "ai_act:art:3:40",
+          "ai_act:art:3:42",
+          "ai_act:def:biometric-data",
+          "ai_act:recital:30",
+          "ai_act:recital:16",
+          "ai_act:recital:18",
+          "ai_act:recital:36",
+          "ai_act:art:50:3",
+          "ai_act:recital:15",
+          "ai_act:recital:54"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "What is a biometric categorisation system?",
+        "category": "definition",
+        "gold_chunk_ids": [
+          "ai_act:def:biometric-categorisation-system"
+        ],
+        "ranked_ids": [
+          "ai_act:art:3:40",
+          "ai_act:def:biometric-categorisation-system",
+          "ai_act:recital:30",
+          "ai_act:art:50:3",
+          "ai_act:recital:16",
+          "ai_act:recital:54",
+          "ai_act:annex:III:intro",
+          "ai_act:recital:14",
+          "ai_act:recital:15",
+          "ai_act:art:3:35"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.5,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "query": "What transparency obligation applies when an AI system interacts directly with natural persons?",
+      "cross_encoder": {
+        "query": "What transparency obligation applies when an AI system interacts directly with natural persons?",
+        "category": "transparency",
+        "gold_chunk_ids": [
+          "ai_act:art:50:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:50:1",
+          "ai_act:recital:132",
+          "ai_act:art:50:5",
+          "ai_act:art:50:3",
+          "ai_act:art:50:4",
+          "ai_act:recital:134",
+          "ai_act:recital:93",
+          "ai_act:recital:133",
+          "ai_act:art:5:1.d",
+          "ai_act:recital:3"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "What transparency obligation applies when an AI system interacts directly with natural persons?",
+        "category": "transparency",
+        "gold_chunk_ids": [
+          "ai_act:art:50:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:50:1",
+          "ai_act:art:3:41",
+          "ai_act:recital:31",
+          "ai_act:recital:132",
+          "ai_act:recital:79",
+          "ai_act:recital:134",
+          "ai_act:annex:III:8",
+          "ai_act:recital:62",
+          "ai_act:art:92:5",
+          "ai_act:recital:137"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "fusion_only": {
+        "query": "What transparency obligation applies when an AI system interacts directly with natural persons?",
+        "category": "transparency",
+        "gold_chunk_ids": [
+          "ai_act:art:50:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:50:1",
+          "ai_act:recital:132",
+          "ai_act:art:50:3",
+          "ai_act:art:50:4",
+          "ai_act:recital:134",
+          "ai_act:art:50:5",
+          "ai_act:recital:137",
+          "ai_act:recital:104",
+          "ai_act:recital:133",
+          "ai_act:art:50:2"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "Does a person have the right not to be subject to a decision based solely on automated processing under GDPR?",
+      "cross_encoder": {
+        "query": "Does a person have the right not to be subject to a decision based solely on automated processing under GDPR?",
+        "category": "gdpr",
+        "gold_chunk_ids": [
+          "gdpr:art:22:1"
+        ],
+        "ranked_ids": [
+          "gdpr:art:22:1",
+          "gdpr:art:35:2",
+          "gdpr:art:35:1",
+          "gdpr:art:22:4",
+          "gdpr:art:9:2.d",
+          "ai_act:recital:39",
+          "gdpr:art:9:2.a",
+          "ai_act:recital:63",
+          "ai_act:recital:94",
+          "gdpr:art:22:3"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "Does a person have the right not to be subject to a decision based solely on automated processing under GDPR?",
+        "category": "gdpr",
+        "gold_chunk_ids": [
+          "gdpr:art:22:1"
+        ],
+        "ranked_ids": [
+          "gdpr:art:22:1",
+          "ai_act:recital:29",
+          "gdpr:art:9:2.f",
+          "gdpr:art:35:11",
+          "ai_act:recital:39",
+          "ai_act:art:86:1",
+          "gdpr:art:6:4",
+          "ai_act:recital:69",
+          "ai_act:def:fundamental-rights",
+          "gdpr:art:6:1"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "fusion_only": {
+        "query": "Does a person have the right not to be subject to a decision based solely on automated processing under GDPR?",
+        "category": "gdpr",
+        "gold_chunk_ids": [
+          "gdpr:art:22:1"
+        ],
+        "ranked_ids": [
+          "gdpr:art:22:1",
+          "gdpr:art:6:4",
+          "gdpr:art:9:2.d",
+          "gdpr:art:35:10",
+          "gdpr:art:35:2",
+          "gdpr:art:9:2.g",
+          "gdpr:art:22:2",
+          "gdpr:art:9:2.a",
+          "ai_act:recital:70",
+          "gdpr:art:9:2.j"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "When must a controller carry out a data protection impact assessment under GDPR?",
+      "cross_encoder": {
+        "query": "When must a controller carry out a data protection impact assessment under GDPR?",
+        "category": "gdpr",
+        "gold_chunk_ids": [
+          "gdpr:art:35:1"
+        ],
+        "ranked_ids": [
+          "gdpr:art:35:11",
+          "gdpr:art:35:10",
+          "gdpr:art:35:1",
+          "gdpr:art:35:2",
+          "gdpr:art:35:8",
+          "gdpr:art:9:2.b",
+          "gdpr:art:6:4",
+          "gdpr:art:35:4",
+          "gdpr:art:5:1",
+          "ai_act:art:26:9"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.3333333333333333,
+        "ndcg@10": 0.5
+      },
+      "mmr": {
+        "query": "When must a controller carry out a data protection impact assessment under GDPR?",
+        "category": "gdpr",
+        "gold_chunk_ids": [
+          "gdpr:art:35:1"
+        ],
+        "ranked_ids": [
+          "gdpr:art:35:2",
+          "gdpr:art:35:11",
+          "ai_act:recital:180",
+          "gdpr:art:22:2",
+          "ai_act:art:27:5",
+          "ai_act:annex:VIII:intro3.5",
+          "gdpr:art:35:5",
+          "ai_act:recital:69",
+          "gdpr:art:6:4",
+          "ai_act:recital:96"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "When must a controller carry out a data protection impact assessment under GDPR?",
+        "category": "gdpr",
+        "gold_chunk_ids": [
+          "gdpr:art:35:1"
+        ],
+        "ranked_ids": [
+          "gdpr:art:35:11",
+          "gdpr:art:35:2",
+          "gdpr:art:35:10",
+          "gdpr:art:35:4",
+          "gdpr:art:35:1",
+          "gdpr:art:35:5",
+          "gdpr:art:35:7",
+          "gdpr:art:35:8",
+          "gdpr:art:22:2",
+          "ai_act:annex:VIII:intro3.5"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.2,
+        "ndcg@10": 0.38685280723454163
+      }
+    },
+    {
+      "query": "Is processing of data revealing political opinions or religious beliefs generally prohibited under GDPR?",
+      "cross_encoder": {
+        "query": "Is processing of data revealing political opinions or religious beliefs generally prohibited under GDPR?",
+        "category": "gdpr",
+        "gold_chunk_ids": [
+          "gdpr:art:9:1"
+        ],
+        "ranked_ids": [
+          "gdpr:art:9:1",
+          "ai_act:recital:30",
+          "ai_act:recital:63",
+          "gdpr:art:9:2.d",
+          "ai_act:recital:70",
+          "ai_act:art:7:2.c",
+          "ai_act:art:5:1.g",
+          "gdpr:art:9:2.b",
+          "gdpr:art:9:2.i",
+          "gdpr:art:6:3"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "Is processing of data revealing political opinions or religious beliefs generally prohibited under GDPR?",
+        "category": "gdpr",
+        "gold_chunk_ids": [
+          "gdpr:art:9:1"
+        ],
+        "ranked_ids": [
+          "gdpr:art:9:1",
+          "ai_act:recital:29",
+          "ai_act:recital:45",
+          "gdpr:art:6:1",
+          "gdpr:art:22:1",
+          "gdpr:art:35:9",
+          "ai_act:recital:63",
+          "gdpr:art:5:1",
+          "gdpr:art:9:2.d",
+          "gdpr:art:9:4"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "fusion_only": {
+        "query": "Is processing of data revealing political opinions or religious beliefs generally prohibited under GDPR?",
+        "category": "gdpr",
+        "gold_chunk_ids": [
+          "gdpr:art:9:1"
+        ],
+        "ranked_ids": [
+          "gdpr:art:9:1",
+          "gdpr:art:9:2.d",
+          "ai_act:recital:30",
+          "ai_act:recital:70",
+          "gdpr:art:9:2.c",
+          "gdpr:art:22:1",
+          "ai_act:art:5:1.g",
+          "gdpr:art:35:9",
+          "ai_act:recital:63",
+          "gdpr:art:6:4"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "What must deployers of high-risk AI systems do to comply with the instructions for use?",
+      "cross_encoder": {
+        "query": "What must deployers of high-risk AI systems do to comply with the instructions for use?",
+        "category": "deployer_obligation",
+        "gold_chunk_ids": [
+          "ai_act:art:26:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:26:1",
+          "ai_act:art:26:5",
+          "ai_act:recital:72",
+          "ai_act:art:26:8",
+          "ai_act:recital:96",
+          "ai_act:art:26:9",
+          "ai_act:recital:93",
+          "ai_act:art:13:3.f",
+          "ai_act:art:27:1",
+          "ai_act:art:13:2"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "What must deployers of high-risk AI systems do to comply with the instructions for use?",
+        "category": "deployer_obligation",
+        "gold_chunk_ids": [
+          "ai_act:art:26:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:26:1",
+          "ai_act:art:13:2",
+          "ai_act:recital:72",
+          "ai_act:art:53:4",
+          "ai_act:art:15:3",
+          "ai_act:recital:66",
+          "ai_act:art:13:3.e",
+          "ai_act:art:14:4",
+          "ai_act:recital:26",
+          "ai_act:art:26:4"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "fusion_only": {
+        "query": "What must deployers of high-risk AI systems do to comply with the instructions for use?",
+        "category": "deployer_obligation",
+        "gold_chunk_ids": [
+          "ai_act:art:26:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:26:1",
+          "ai_act:recital:72",
+          "ai_act:art:13:3.f",
+          "ai_act:art:26:5",
+          "ai_act:art:26:8",
+          "ai_act:recital:93",
+          "ai_act:art:26:11",
+          "ai_act:art:13:3.b",
+          "ai_act:art:17:1.e",
+          "ai_act:art:13:2"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "What must providers of high-risk AI systems ensure before placing their system on the market?",
+      "cross_encoder": {
+        "query": "What must providers of high-risk AI systems ensure before placing their system on the market?",
+        "category": "provider_obligation",
+        "gold_chunk_ids": [
+          "ai_act:art:16:intro",
+          "ai_act:art:16:(f)"
+        ],
+        "ranked_ids": [
+          "ai_act:art:23:1",
+          "ai_act:recital:72",
+          "ai_act:recital:73",
+          "ai_act:recital:155",
+          "ai_act:art:16:(f)",
+          "ai_act:art:17:1.f",
+          "ai_act:recital:123",
+          "ai_act:art:6:4",
+          "ai_act:art:60:2",
+          "ai_act:art:16:intro"
+        ],
+        "recall@5": 0.5,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 0.2,
+        "ndcg@10": 0.41443699955334395
+      },
+      "mmr": {
+        "query": "What must providers of high-risk AI systems ensure before placing their system on the market?",
+        "category": "provider_obligation",
+        "gold_chunk_ids": [
+          "ai_act:art:16:intro",
+          "ai_act:art:16:(f)"
+        ],
+        "ranked_ids": [
+          "ai_act:art:15:1",
+          "ai_act:recital:155",
+          "ai_act:art:60:2",
+          "ai_act:recital:79",
+          "ai_act:recital:123",
+          "ai_act:art:49:2",
+          "ai_act:art:24:2",
+          "ai_act:recital:75",
+          "ai_act:art:15:5",
+          "ai_act:art:17:1.f"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "What must providers of high-risk AI systems ensure before placing their system on the market?",
+        "category": "provider_obligation",
+        "gold_chunk_ids": [
+          "ai_act:art:16:intro",
+          "ai_act:art:16:(f)"
+        ],
+        "ranked_ids": [
+          "ai_act:art:60:2",
+          "ai_act:art:16:intro",
+          "ai_act:recital:155",
+          "ai_act:art:49:1",
+          "ai_act:recital:123",
+          "ai_act:art:6:4",
+          "ai_act:art:49:2",
+          "ai_act:art:6:1",
+          "ai_act:art:15:1",
+          "ai_act:art:13:1"
+        ],
+        "recall@5": 0.5,
+        "recall@10": 0.5,
+        "precision@5": 0.2,
+        "mrr": 0.5,
+        "ndcg@10": 0.38685280723454163
+      }
+    },
+    {
+      "query": "What conformity assessment must a high-risk AI system undergo?",
+      "cross_encoder": {
+        "query": "What conformity assessment must a high-risk AI system undergo?",
+        "category": "provider_obligation",
+        "gold_chunk_ids": [
+          "ai_act:art:16:(f)"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:125",
+          "ai_act:art:6:1",
+          "ai_act:art:6:1b",
+          "ai_act:art:43:4",
+          "ai_act:recital:50",
+          "ai_act:recital:128",
+          "ai_act:recital:123",
+          "ai_act:art:32:intro",
+          "ai_act:art:43:2",
+          "ai_act:recital:124"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "mmr": {
+        "query": "What conformity assessment must a high-risk AI system undergo?",
+        "category": "provider_obligation",
+        "gold_chunk_ids": [
+          "ai_act:art:16:(f)"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:123",
+          "ai_act:art:15:3",
+          "ai_act:art:41:3",
+          "ai_act:def:conformity-assessment",
+          "ai_act:recital:125",
+          "ai_act:art:43:2",
+          "ai_act:art:13:1",
+          "ai_act:art:42:2",
+          "ai_act:art:43:4",
+          "ai_act:art:17:1.a"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "What conformity assessment must a high-risk AI system undergo?",
+        "category": "provider_obligation",
+        "gold_chunk_ids": [
+          "ai_act:art:16:(f)"
+        ],
+        "ranked_ids": [
+          "ai_act:art:43:4",
+          "ai_act:art:3:20",
+          "ai_act:recital:123",
+          "ai_act:recital:125",
+          "ai_act:art:32:intro",
+          "ai_act:recital:50",
+          "ai_act:art:17:1.a",
+          "ai_act:def:conformity-assessment",
+          "ai_act:art:23:1",
+          "ai_act:art:29:3"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      }
+    },
+    {
+      "query": "What must providers of general-purpose AI models document about their model?",
+      "cross_encoder": {
+        "query": "What must providers of general-purpose AI models document about their model?",
+        "category": "gpai",
+        "gold_chunk_ids": [
+          "ai_act:art:53:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:53:1",
+          "ai_act:recital:101",
+          "ai_act:recital:115",
+          "ai_act:recital:114",
+          "ai_act:art:91:1",
+          "ai_act:art:55:1",
+          "ai_act:art:92:5",
+          "ai_act:recital:97",
+          "ai_act:art:53:3",
+          "ai_act:recital:112"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "What must providers of general-purpose AI models document about their model?",
+        "category": "gpai",
+        "gold_chunk_ids": [
+          "ai_act:art:53:1"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:101",
+          "ai_act:annex:XII:2",
+          "ai_act:def:general-purpose-ai-model",
+          "ai_act:art:54:6",
+          "ai_act:annex:XI:intro",
+          "ai_act:art:92:7",
+          "ai_act:art:92:5",
+          "ai_act:art:50:2",
+          "ai_act:art:53:4",
+          "ai_act:recital:111"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "What must providers of general-purpose AI models document about their model?",
+        "category": "gpai",
+        "gold_chunk_ids": [
+          "ai_act:art:53:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:53:1",
+          "ai_act:recital:101",
+          "ai_act:art:53:2",
+          "ai_act:recital:97",
+          "ai_act:art:54:6",
+          "ai_act:recital:112",
+          "ai_act:art:53:3",
+          "ai_act:art:92:5",
+          "ai_act:recital:114",
+          "ai_act:annex:XI:intro"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      }
+    },
+    {
+      "query": "What is the maximum fine for using a prohibited AI practice?",
+      "cross_encoder": {
+        "query": "What is the maximum fine for using a prohibited AI practice?",
+        "category": "penalty",
+        "gold_chunk_ids": [
+          "ai_act:art:99:3"
+        ],
+        "ranked_ids": [
+          "ai_act:art:99:3",
+          "ai_act:art:100:2",
+          "ai_act:art:5:1.h",
+          "ai_act:art:5:1.g",
+          "ai_act:art:5:1.f",
+          "ai_act:art:5:1.ba",
+          "ai_act:art:5:1.e",
+          "ai_act:art:5:1.bb",
+          "ai_act:art:5:1.c",
+          "ai_act:art:5:1.a"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "What is the maximum fine for using a prohibited AI practice?",
+        "category": "penalty",
+        "gold_chunk_ids": [
+          "ai_act:art:99:3"
+        ],
+        "ranked_ids": [
+          "ai_act:art:99:3",
+          "ai_act:recital:28",
+          "ai_act:art:60:7",
+          "ai_act:art:2:12",
+          "ai_act:art:5:1.ba",
+          "ai_act:art:56:9",
+          "ai_act:recital:45",
+          "ai_act:recital:33",
+          "ai_act:art:80:7",
+          "ai_act:recital:109"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "fusion_only": {
+        "query": "What is the maximum fine for using a prohibited AI practice?",
+        "category": "penalty",
+        "gold_chunk_ids": [
+          "ai_act:art:99:3"
+        ],
+        "ranked_ids": [
+          "ai_act:art:101:1",
+          "ai_act:art:5:1.d",
+          "ai_act:art:5:1.h",
+          "ai_act:art:5:1.b",
+          "ai_act:art:5:1.a",
+          "ai_act:art:5:1.f",
+          "ai_act:art:5:1.e",
+          "ai_act:art:5:1.bb",
+          "ai_act:art:99:3",
+          "ai_act:recital:117"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 1.0,
+        "precision@5": 0.0,
+        "mrr": 0.1111111111111111,
+        "ndcg@10": 0.3010299956639812
+      }
+    },
+    {
+      "query": "Who sets the rules on penalties for infringements of the AI Act?",
+      "cross_encoder": {
+        "query": "Who sets the rules on penalties for infringements of the AI Act?",
+        "category": "penalty",
+        "gold_chunk_ids": [
+          "ai_act:art:99:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:99:1",
+          "ai_act:art:99:8",
+          "ai_act:recital:168",
+          "ai_act:art:99:2",
+          "ai_act:recital:162",
+          "ai_act:art:101:1",
+          "ai_act:art:100:1",
+          "ai_act:recital:169",
+          "ai_act:art:99:9",
+          "ai_act:art:112:4"
+        ],
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "precision@5": 0.2,
+        "mrr": 1.0,
+        "ndcg@10": 1.0
+      },
+      "mmr": {
+        "query": "Who sets the rules on penalties for infringements of the AI Act?",
+        "category": "penalty",
+        "gold_chunk_ids": [
+          "ai_act:art:99:1"
+        ],
+        "ranked_ids": [
+          "ai_act:art:101:1",
+          "ai_act:art:3:45",
+          "ai_act:art:87:intro",
+          "ai_act:art:99:8",
+          "ai_act:art:59:2",
+          "ai_act:recital:45",
+          "ai_act:art:57:12",
+          "ai_act:art:80:6",
+          "ai_act:recital:29",
+          "ai_act:recital:168"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "precision@5": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      },
+      "fusion_only": {
+        "query": "Who sets the rules on penalties for infringements of the AI Act?",
+        "category": "penalty",
+        "gold_chunk_ids": [
+          "ai_act:art:99:1"
+        ],
+        "ranked_ids": [
+          "ai_act:recital:179",
+          "ai_act:art:99:6a",
+          "ai_act:art:99:3",
+          "ai_act:recital:168",
+          "ai_act:art:57:12",
+          "ai_act:art:99:1",
+          "ai_act:art:87:intro",
+          "ai_act:art:59:2",
+          "ai_act:art:101:1",
+          "ai_act:recital:162"
+        ],
+        "recall@5": 0.0,
+        "recall@10": 1.0,
+        "precision@5": 0.0,
+        "mrr": 0.16666666666666666,
+        "ndcg@10": 0.3562071871080222
+      }
+    }
+  ]
+}

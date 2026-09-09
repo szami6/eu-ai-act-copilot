@@ -1,7 +1,7 @@
 {
   "chunk_count": 1021,
   "collection_name": "ai_act_chunks",
-  "created_at": "2026-09-07T21:21:27.497427+00:00",
+  "created_at": "2026-09-09T08:50:00.263572+00:00",
   "definitions_count": 55,
   "embedding_model": "BAAI/bge-base-en-v1.5",
   "source_hashes": {
@@ -311,10 +311,10 @@
     "ai_act:recital:97": "40df255321723e1b13ae337639462ceb9fbe5b3b178ed1a9a47f2ae083b6eebc",
     "ai_act:recital:98": "b63842bcd209fa9e782ff416247aaf2ec0617f82b07836c0ce67b0325dec6720",
     "ai_act:recital:99": "c6f364dad5ceda114d0d003ceab4bda7d120be7ba5299908325565ebf18f2e52",
-    "gdpr:art:22": "cd260894df76c3c07da5f6eadf2c49397d54220d775ac36617b115ab9765eb5b",
-    "gdpr:art:35": "c8de65f8fdbd350a0a32449dad803aa587774848e3f273851a3f890e7918be5f",
-    "gdpr:art:5": "eed0c86099506880ba6b45f5a8410ff26cebb09bdd814059cd705049ca3f8578",
-    "gdpr:art:6": "dd4d2dbfc8a9600b129ef1c44d8665fb19cae801c9f191023604de34901f004b",
-    "gdpr:art:9": "03c41e99f5c47f5a84d6195051a6fc3367c5570d2e38c17ba211f0a824e03d68"
+    "gdpr:art:22": "61b7dcf4226336d7be51e95a05fe90a562a6d299e54d8d6a12e3dd42b943f44b",
+    "gdpr:art:35": "e2d1fbde5b086751500fe617b7ef0bb70c13d8fbf2d3dd392d94d36a0a0a9c6b",
+    "gdpr:art:5": "22e33b59c4f74887f4d302c4ccba1e067ad054b826d5c23ae6faecf4d151b288",
+    "gdpr:art:6": "c71195ff501872957db10828ee189f348d8a1d15dd494640a17a0fe4a7f93284",
+    "gdpr:art:9": "5821d75c845174d2551c6ccd6be8f914b434f67326b270f6bbdae8c9cb6dc8fb"
   }
 }
