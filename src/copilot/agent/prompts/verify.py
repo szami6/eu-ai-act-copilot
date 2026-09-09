@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
+from copilot.agent.prompts.synthesize import render_tool_results
+from copilot.agent.state import ToolCallRecord
 from copilot.rag.state import Evidence
 
 
@@ -36,6 +38,9 @@ _PROMPT_TEMPLATE = """Judge whether this draft answer is grounded in the passage
 Passages:
 {evidence}
 
+Deterministic tool results:
+{tool_results}
+
 Draft answer:
 {draft}
 
@@ -50,5 +55,11 @@ def _render_evidence(evidence: list[Evidence]) -> str:
     return "\n\n".join(f"[{e.chunk_id}]\n{e.text}" for e in evidence)
 
 
-def build_verify_prompt(draft: str, evidence: list[Evidence]) -> str:
-    return _PROMPT_TEMPLATE.format(evidence=_render_evidence(evidence), draft=draft)
+def build_verify_prompt(
+    draft: str, evidence: list[Evidence], tool_calls: list[ToolCallRecord]
+) -> str:
+    return _PROMPT_TEMPLATE.format(
+        evidence=_render_evidence(evidence),
+        tool_results=render_tool_results(tool_calls),
+        draft=draft,
+    )

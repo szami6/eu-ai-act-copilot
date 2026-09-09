@@ -88,5 +88,6 @@ class RagState(TypedDict):
     candidates: list[Evidence]
     sufficient: bool
     retry_count: int
+    retry_pending: bool
 
     evidence: list[Evidence]

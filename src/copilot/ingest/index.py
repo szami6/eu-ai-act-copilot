@@ -5,9 +5,9 @@ the RAG subgraph's in-process BM25 index (§4.5) is rebuilt at startup by
 scrolling every point back out of this collection rather than persisting a
 second copy of the corpus.
 
-Idempotent by design: a point's id is a UUID5 derived from its chunk id, so
-re-running ingest after a source edit *overwrites* the same points instead
-of accumulating duplicates alongside them.
+Each completed ingest replaces the collection after embeddings have been
+computed, so chunks removed or renamed by a source/parser change cannot
+remain as stale retrieval candidates.
 """
 
 from __future__ import annotations
@@ -56,9 +56,9 @@ def _payload(chunk: Chunk) -> dict[str, object]:
     }
 
 
-def ensure_collection(client: QdrantClient) -> None:
+def replace_collection(client: QdrantClient) -> None:
     if client.collection_exists(COLLECTION_NAME):
-        return
+        client.delete_collection(COLLECTION_NAME)
     client.create_collection(
         collection_name=COLLECTION_NAME,
         vectors_config=models.VectorParams(size=EMBEDDING_DIM, distance=models.Distance.COSINE),
@@ -68,9 +68,9 @@ def ensure_collection(client: QdrantClient) -> None:
 
 def index_chunks(client: QdrantClient, chunks: list[Chunk]) -> None:
     """Embed every chunk's (breadcrumb-prefixed) text and upsert into Qdrant."""
-    ensure_collection(client)
     model = get_embedding_model()
     vectors = list(model.embed([c.text for c in chunks], batch_size=_EMBED_BATCH_SIZE))
+    replace_collection(client)
 
     for start in range(0, len(chunks), _UPSERT_BATCH_SIZE):
         end = start + _UPSERT_BATCH_SIZE

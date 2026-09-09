@@ -1,6 +1,6 @@
 """Node-level RAG-subgraph eval (PLAN.md §7.2): Recall@5, Recall@10, MRR,
-nDCG@10 against `data/eval/retrieval_gold.yaml`, plus the `rerank` ablation
-(Δ precision@5 vs. fusion-only). "Isolated harness, no LLM in the loop":
+nDCG@10 against `data/eval/retrieval_gold.yaml`, plus separate cross-encoder,
+MMR-fallback, and RRF-fusion-only arms. "Isolated harness, no LLM in the loop":
 each gold query is fed to `retrieve`/`rerank` directly as its sole
 `query_variants` entry, so `rewrite`'s LLM call never runs — otherwise a
 paraphrase, good or bad, gets scored as retrieval quality. That's a real,
@@ -8,9 +8,8 @@ observed confound, not a hypothetical one: `rewrite`'s dummy-LLM fixture is
 a fixed string, so a manual full-graph smoke test showed it injecting the
 same two off-topic variants into every query regardless of content.
 
-Phase 2/3 add sibling `eval_*` functions here for triage / classify_risk_tier
-/ end-to-end judged eval (this file's own PLAN.md file-tree entry: "node-level
-+ end-to-end + ablations") — only retrieval exists yet.
+End-to-end generation and deterministic judging live in `evals.generate`
+and `evals.judge`; this module remains retrieval-only by design.
 
 Run via `make eval` (== `uv run python -m evals.run_eval`) from the host,
 with `docker compose up qdrant` (or the full stack) already running — Qdrant
@@ -20,6 +19,8 @@ host port, see `config.py`).
 
 from __future__ import annotations
 
+import hashlib
+import json
 import math
 import statistics
 import subprocess
@@ -36,9 +37,11 @@ from langgraph.runtime import Runtime
 from qdrant_client import QdrantClient
 
 from copilot.config import Settings, get_settings
+from copilot.embeddings import EMBEDDING_MODEL_NAME
 from copilot.ingest.index import COLLECTION_NAME
 from copilot.llm import DummyChatModel
 from copilot.rag.graph import RagContext, rerank, retrieve
+from copilot.rag.rerank import RERANKER_MODEL_NAME
 from copilot.rag.retrievers import load_bm25_index
 from copilot.rag.state import RagState
 
@@ -123,7 +126,9 @@ def score_query(gold: GoldQuery, ranked_ids: list[str]) -> QueryScore:
     )
 
 
-def ranked_chunk_ids(context: RagContext, query: str, k: int = _TOP_K) -> list[str]:
+def ranked_chunk_ids(
+    context: RagContext, query: str, k: int = _TOP_K, *, apply_rerank: bool = True
+) -> list[str]:
     """Run `retrieve` -> `rerank` directly, seeding `query_variants` with only
     the raw gold query — `rewrite` (the LLM node) never runs."""
     runtime: Runtime[RagContext] = Runtime(context=context)
@@ -135,10 +140,14 @@ def ranked_chunk_ids(context: RagContext, query: str, k: int = _TOP_K) -> list[s
         candidates=[],
         sufficient=False,
         retry_count=0,
+        retry_pending=False,
         evidence=[],
     )
     state.update(cast("RagState", retrieve(state, runtime)))
-    state.update(cast("RagState", rerank(state, runtime)))
+    if apply_rerank:
+        state.update(cast("RagState", rerank(state, runtime)))
+    else:
+        state["candidates"] = state["candidates"][:k]
     return [c.chunk_id for c in state["candidates"]]
 
 
@@ -186,17 +195,22 @@ def _format_table(headers: list[str], rows: list[list[str]]) -> str:
 
 
 def render_report(
-    git_sha: str, with_rerank: list[QueryScore], without_rerank: list[QueryScore]
+    run_id: str,
+    generated_at: str,
+    with_rerank: list[QueryScore],
+    with_mmr: list[QueryScore],
+    fusion_only: list[QueryScore],
 ) -> str:
     overall = _aggregate(with_rerank)
-    without = _aggregate(without_rerank)
+    mmr = _aggregate(with_mmr)
+    without = _aggregate(fusion_only)
     by_cat = _by_category(with_rerank)
     misses = [s for s in with_rerank if s.recall_at_10 < 1.0]
 
     lines = [
-        f"# Retrieval eval — {git_sha}",
+        f"# Retrieval eval — {run_id}",
         "",
-        f"Generated {datetime.now(UTC).isoformat()} · {len(with_rerank)} gold queries · "
+        f"Generated {generated_at} · {len(with_rerank)} gold queries · "
         "`data/eval/retrieval_gold.yaml` · no LLM in the loop (PLAN.md §7.2).",
         "",
         "## Headline (retrieve -> rerank, production default: `rerank_enabled=True`)",
@@ -230,7 +244,10 @@ def render_report(
             ],
         ),
         "",
-        "## Rerank ablation (Δ precision@5, cross-encoder vs. MMR fusion-only)",
+        "## Ranking comparison",
+        "",
+        "Precision@5 is labeled-hit density, not exhaustive relevance precision: the gold set "
+        "does not label every potentially relevant passage.",
         "",
         _format_table(
             ["Config", "Precision@5", "Recall@5", "MRR"],
@@ -242,7 +259,13 @@ def render_report(
                     f"{overall['mrr']:.3f}",
                 ],
                 [
-                    "rerank off (MMR fusion-only)",
+                    "production fallback (MMR)",
+                    f"{mmr['precision@5']:.3f}",
+                    f"{mmr['recall@5']:.3f}",
+                    f"{mmr['mrr']:.3f}",
+                ],
+                [
+                    "ablation (RRF fusion-only)",
                     f"{without['precision@5']:.3f}",
                     f"{without['recall@5']:.3f}",
                     f"{without['mrr']:.3f}",
@@ -274,6 +297,31 @@ def render_report(
     return "\n".join(lines)
 
 
+def _file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _load_manifest(path: Path) -> dict[str, object]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"Corpus manifest must be a JSON object: {path}")
+    return value
+
+
+def _score_payload(score: QueryScore) -> dict[str, object]:
+    return {
+        "query": score.gold.query,
+        "category": score.gold.category,
+        "gold_chunk_ids": list(score.gold.gold_chunk_ids),
+        "ranked_ids": list(score.ranked_ids),
+        "recall@5": score.recall_at_5,
+        "recall@10": score.recall_at_10,
+        "precision@5": score.precision_at_5,
+        "mrr": score.reciprocal_rank,
+        "ndcg@10": score.ndcg_at_10,
+    }
+
+
 def build_context(settings: Settings, client: QdrantClient, *, rerank_enabled: bool) -> RagContext:
     return RagContext(
         qdrant_client=client,
@@ -297,6 +345,14 @@ def main() -> int:
 
     bm25_index = load_bm25_index(client, COLLECTION_NAME)
     print(f"BM25 index mirrors {len(bm25_index.chunks)} chunks from '{COLLECTION_NAME}'")
+    manifest_path = settings.data_dir / "manifest.json"
+    corpus_manifest = _load_manifest(manifest_path)
+    expected_chunks = int(corpus_manifest.get("chunk_count", -1))
+    if len(bm25_index.chunks) != expected_chunks:
+        raise RuntimeError(
+            "Qdrant corpus does not match data/manifest.json: "
+            f"expected {expected_chunks} chunks, found {len(bm25_index.chunks)}"
+        )
 
     context_on = RagContext(
         qdrant_client=client,
@@ -318,25 +374,71 @@ def main() -> int:
         with_rerank.append(score)
         print(f"  [{i}/{len(gold)}] recall@5={score.recall_at_5:.2f}  {g.query[:70]!r}")
 
-    print("Scoring with rerank OFF (MMR fusion-only)...")
-    without_rerank = []
+    print("Scoring production fallback with MMR...")
+    with_mmr = []
     for i, g in enumerate(gold, start=1):
         score = score_query(g, ranked_chunk_ids(context_off, g.query))
-        without_rerank.append(score)
+        with_mmr.append(score)
         print(f"  [{i}/{len(gold)}] recall@5={score.recall_at_5:.2f}  {g.query[:70]!r}")
 
+    print("Scoring true rerank ablation with RRF fusion order only...")
+    fusion_only = []
+    for i, g in enumerate(gold, start=1):
+        score = score_query(g, ranked_chunk_ids(context_on, g.query, apply_rerank=False))
+        fusion_only.append(score)
+        print(f"  [{i}/{len(gold)}] recall@5={score.recall_at_5:.2f}  {g.query[:70]!r}")
+
+    generated_at = datetime.now(UTC)
     git_sha = _git_sha()
-    report = render_report(git_sha, with_rerank, without_rerank)
+    run_id = f"{git_sha}-{generated_at.strftime('%Y%m%dT%H%M%SZ')}"
+    report = render_report(
+        run_id, generated_at.isoformat(), with_rerank, with_mmr, fusion_only
+    )
 
     # Persist before printing: report content is valuable and expensive to
     # regenerate (the rerank arm alone is ~15-25 min), so a console-encoding
     # failure on the print below must never cost the computed results.
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    report_path = REPORTS_DIR / f"retrieval_eval_{git_sha}.md"
+    report_path = REPORTS_DIR / f"retrieval_eval_{run_id}.md"
+    artifact_path = REPORTS_DIR / f"retrieval_eval_{run_id}.json"
+    artifact = {
+        "schema_version": 1,
+        "run_id": run_id,
+        "generated_at": generated_at.isoformat(),
+        "git_sha": git_sha,
+        "dataset": {
+            "path": str(settings.data_dir / "eval" / "retrieval_gold.yaml"),
+            "sha256": _file_sha256(settings.data_dir / "eval" / "retrieval_gold.yaml"),
+        },
+        "corpus_manifest": corpus_manifest,
+        "settings": {
+            "embedding_model": EMBEDDING_MODEL_NAME,
+            "reranker_model": RERANKER_MODEL_NAME,
+            "top_k": _TOP_K,
+        },
+        "summary": {
+            "cross_encoder": _aggregate(with_rerank),
+            "mmr": _aggregate(with_mmr),
+            "fusion_only": _aggregate(fusion_only),
+        },
+        "cases": [
+            {
+                "query": score.gold.query,
+                "cross_encoder": _score_payload(score),
+                "mmr": _score_payload(mmr_score),
+                "fusion_only": _score_payload(fusion_score),
+            }
+            for score, mmr_score, fusion_score in zip(
+                with_rerank, with_mmr, fusion_only, strict=True
+            )
+        ],
+    }
+    artifact_path.write_text(json.dumps(artifact, indent=2), encoding="utf-8")
     report_path.write_text(report, encoding="utf-8")
 
     print("\n" + report)
     print(f"Wrote {report_path}")
+    print(f"Wrote {artifact_path}")
     return 0
 
 

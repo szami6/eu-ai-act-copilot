@@ -6,6 +6,10 @@ draft answer is free text, streamed to the UI (Phase 4) as it is generated.
 
 from __future__ import annotations
 
+import json
+
+from pydantic import BaseModel
+
 from copilot.agent.state import ToolCallRecord
 from copilot.rag.state import Evidence
 
@@ -32,10 +36,23 @@ def _render_evidence(evidence: list[Evidence]) -> str:
     return "\n\n".join(f"[{e.chunk_id}]\n{e.text}" for e in evidence)
 
 
-def _render_tool_results(tool_calls: list[ToolCallRecord]) -> str:
+def render_tool_results(tool_calls: list[ToolCallRecord]) -> str:
     if not tool_calls:
         return "(none)"
-    return "\n\n".join(f"{tc.tool} (step {tc.step_id}): {tc.summary}" for tc in tool_calls)
+    rendered = []
+    for call in tool_calls:
+        detail = call.summary
+        if call.tool != "rag_search":
+            if isinstance(call.result, BaseModel):
+                detail = json.dumps(call.result.model_dump(mode="json"), ensure_ascii=False)
+            elif isinstance(call.result, list) and all(
+                isinstance(item, BaseModel) for item in call.result
+            ):
+                detail = json.dumps(
+                    [item.model_dump(mode="json") for item in call.result], ensure_ascii=False
+                )
+        rendered.append(f"{call.tool} (step {call.step_id}, ok={call.ok}): {detail}")
+    return "\n\n".join(rendered)
 
 
 def build_synthesize_prompt(
@@ -44,5 +61,5 @@ def build_synthesize_prompt(
     return _PROMPT_TEMPLATE.format(
         query=query,
         evidence=_render_evidence(evidence),
-        tool_results=_render_tool_results(tool_calls),
+        tool_results=render_tool_results(tool_calls),
     )

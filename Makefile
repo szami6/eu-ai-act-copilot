@@ -2,6 +2,7 @@
 
 GIT_SHA := $(shell git rev-parse --short HEAD 2>/dev/null || echo local)
 export GIT_SHA
+EVAL_LLM_BASE_URL ?= http://localhost:8001/v1
 
 ## api + ui + qdrant only. LLM_PROVIDER=dummy in .env -> no model/GPU needed.
 up:
@@ -49,7 +50,7 @@ eval:
 
 ## End-to-end evaluation generation and deterministic report (Phase 5).
 eval-generate:
-	uv run python -m evals.generate
+	uv run python -m evals.generate --llm-base-url $(EVAL_LLM_BASE_URL)
 
 eval-judge:
 	uv run python -m evals.judge

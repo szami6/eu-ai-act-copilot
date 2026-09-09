@@ -131,15 +131,15 @@
   must_not_include: [minimal risk]
 
 - id: tool-03
-  question: Calculate the timeline for a provider's Annex III high-risk system placed on the market on 2026-01-01.
+  question: Calculate the timeline for a provider's Annex III high-risk system placed on the market on 2028-01-01.
   category: tool_required
   expected_route: plan
   expected_tool: compliance_timeline
   expected_tool_output:
     article: Art. 113(c)
-  gold_articles: ["Art. 111", "Art. 113(c)"]
+  gold_articles: ["Art. 113(c)"]
   gold_chunk_ids: [ai_act:art:113]
-  reference_answer: The timeline must be calculated from the Annex III high-risk phase-in date and the system's placement date, with overdue status evaluated as of the run date.
+  reference_answer: Because placement occurs after the Annex III high-risk phase-in, the applicable timeline starts on the 2028-01-01 placement date under Article 113(c), with overdue status evaluated as of the run date.
   must_include: [timeline]
   must_not_include: [I calculated this mentally]
 

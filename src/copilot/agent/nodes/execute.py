@@ -25,8 +25,8 @@ from copilot.agent.prompts.execute import (
     build_compliance_timeline_extraction_prompt,
 )
 from copilot.agent.state import AgentState, NodeEvent, SubTask, ToolCallRecord
-from copilot.agent.tools.compliance_timeline import ObligationDeadline
-from copilot.agent.tools.risk_tier import RiskTierResult
+from copilot.agent.tools.compliance_timeline import HighRiskBasis, ObligationDeadline
+from copilot.agent.tools.risk_tier import ProhibitedPractice, RiskTier, RiskTierResult
 from copilot.rag.state import Evidence, RagResult
 
 _StepResult = tuple[list[Evidence], ToolCallRecord]
@@ -71,6 +71,47 @@ def _summarize_timeline(deadlines: list[ObligationDeadline]) -> str:
     return "; ".join(parts)
 
 
+def _summarize_risk_tier(result: RiskTierResult) -> str:
+    parts = [f"tier={result.tier.value}", f"confidence={result.confidence:.2f}"]
+    if result.triggering_criteria:
+        criteria = "; ".join(
+            f"{criterion.article}: {criterion.description}"
+            for criterion in result.triggering_criteria
+        )
+        parts.append(f"criteria={criteria}")
+    if result.unresolved_features:
+        parts.append(f"unresolved={' | '.join(result.unresolved_features)}")
+    return ", ".join(parts)
+
+
+def _risk_dependency(subtask: SubTask, state: AgentState) -> RiskTierResult | None:
+    for call in state["tool_calls"]:
+        if call.step_id in subtask.depends_on and isinstance(call.result, RiskTierResult):
+            return call.result
+    return None
+
+
+def _high_risk_basis(result: RiskTierResult) -> HighRiskBasis | None:
+    articles = [criterion.article for criterion in result.triggering_criteria]
+    if any(article.startswith("Art. 6(1)") for article in articles):
+        return HighRiskBasis.ANNEX_I
+    if any(
+        article.startswith("Annex III") or article.startswith("Art. 6(2)")
+        for article in articles
+    ):
+        return HighRiskBasis.ANNEX_III
+    return None
+
+
+def _prohibited_practice(result: RiskTierResult) -> ProhibitedPractice | None:
+    articles = {criterion.article for criterion in result.triggering_criteria}
+    if "Art. 5(1)(ba)" in articles:
+        return ProhibitedPractice.NON_CONSENSUAL_INTIMATE_IMAGERY
+    if "Art. 5(1)(bb)" in articles:
+        return ProhibitedPractice.CSAM_ADJACENT_CONTENT
+    return None
+
+
 async def _run_rag_search(subtask: SubTask, ctx: AgentContext) -> _StepResult:
     k = ctx.settings.rag_default_k
     result = await ctx.tools["rag_search"].ainvoke({"query": subtask.query, "k": k})
@@ -94,7 +135,7 @@ async def _run_classify_risk_tier(subtask: SubTask, ctx: AgentContext) -> _StepR
         tool="classify_risk_tier",
         input_summary=subtask.query,
         result=result,
-        summary=f"tier={result.tier.value}, confidence={result.confidence:.2f}",
+        summary=_summarize_risk_tier(result),
         ok=True,
     )
     return [], record
@@ -125,6 +166,15 @@ async def _run_compliance_timeline(
             ok=False,
         )
     assert isinstance(args, ComplianceTimelineArgs)
+
+    dependency = _risk_dependency(subtask, state)
+    if dependency is not None:
+        overrides: dict[str, object] = {"tier": dependency.tier}
+        if dependency.tier == RiskTier.HIGH_RISK:
+            overrides["high_risk_basis"] = _high_risk_basis(dependency)
+        elif dependency.tier == RiskTier.PROHIBITED:
+            overrides["prohibited_practice"] = _prohibited_practice(dependency)
+        args = args.model_copy(update=overrides)
 
     try:
         result = await ctx.tools["compliance_timeline"].ainvoke(args.model_dump())

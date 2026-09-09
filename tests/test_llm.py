@@ -24,6 +24,18 @@ def test_dummy_provider_returns_dummy_chat_model() -> None:
     assert isinstance(model, DummyChatModel)
 
 
+def test_openai_compatible_provider_uses_deterministic_temperature() -> None:
+    settings = Settings(
+        _env_file=None,
+        llm_provider=LLMProvider.OPENAI_COMPATIBLE,
+        llm_base_url="http://example.invalid/v1",
+    )
+
+    model = get_chat_model(settings)
+
+    assert model.temperature == 0
+
+
 def test_dummy_chat_model_is_deterministic() -> None:
     model = DummyChatModel()
     first = model.invoke([HumanMessage(content="hello there")])

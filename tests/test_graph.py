@@ -51,6 +51,7 @@ def _state(
     candidates: list[Evidence] | None = None,
     sufficient: bool = False,
     retry_count: int = 0,
+    retry_pending: bool = False,
 ) -> RagState:
     return RagState(
         query=query,
@@ -60,6 +61,7 @@ def _state(
         candidates=candidates or [],
         sufficient=sufficient,
         retry_count=retry_count,
+        retry_pending=retry_pending,
         evidence=[],
     )
 
@@ -249,7 +251,9 @@ def test_grade_proposes_retry_when_insufficient_and_budget_available(
     assert update["sufficient"] is False
     assert update["retry_count"] == 1
     assert update["query"] == "broader query"
+    assert update["query_variants"] == ["broader query"]
     assert update["k"] == 10
+    assert update["retry_pending"] is True
 
 
 def test_grade_does_not_propose_retry_once_budget_exhausted(
@@ -273,6 +277,7 @@ def test_grade_does_not_propose_retry_once_budget_exhausted(
     assert "retry_count" not in update
     assert "query" not in update
     assert "k" not in update
+    assert update["retry_pending"] is False
 
 
 def test_grade_falls_back_to_original_query_when_no_broadened_query_given(
@@ -304,13 +309,32 @@ def test_route_after_grade_to_compress_when_sufficient() -> None:
 
 
 def test_route_after_grade_to_retrieve_when_insufficient_and_budget_available() -> None:
-    state = _state(sufficient=False, retry_count=0)
+    state = _state(sufficient=False, retry_count=1, retry_pending=True)
     assert route_after_grade(state) == "retrieve"
 
 
 def test_route_after_grade_to_compress_when_retry_budget_exhausted() -> None:
-    state = _state(sufficient=False, retry_count=1)
+    state = _state(sufficient=False, retry_count=1, retry_pending=False)
     assert route_after_grade(state) == "compress"
+
+
+def test_grade_update_routes_to_one_broadened_retry(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        llm_module,
+        "_FIXTURES",
+        [
+            (
+                re.compile(r"Grade each"),
+                '{"grades": [], "sufficient": false, "broadened_query": "broader query"}',
+            )
+        ],
+    )
+    state = _state(query="narrow query", query_variants=["narrow query"])
+
+    state.update(cast("RagState", grade(state, Runtime(context=_context()))))
+
+    assert route_after_grade(state) == "retrieve"
+    assert state["query_variants"] == ["broader query"]
 
 
 # --- compress ----------------------------------------------------------------
