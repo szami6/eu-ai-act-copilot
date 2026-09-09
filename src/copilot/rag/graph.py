@@ -248,18 +248,22 @@ def grade(state: RagState, runtime: Runtime[RagContext]) -> dict[str, object]:
         else state["candidates"]
     )
 
-    update: dict[str, object] = {"candidates": graded, "sufficient": output.sufficient}
+    update: dict[str, object] = {
+        "candidates": graded,
+        "sufficient": output.sufficient,
+        "retry_pending": False,
+    }
     if not output.sufficient and state["retry_count"] < _MAX_RETRIES:
         update["retry_count"] = state["retry_count"] + 1
         update["query"] = output.broadened_query or state["query"]
+        update["query_variants"] = [str(update["query"])]
         update["k"] = state["k"] * 2
+        update["retry_pending"] = True
     return update
 
 
 def route_after_grade(state: RagState) -> Literal["retrieve", "compress"]:
-    if state["sufficient"] or state["retry_count"] >= _MAX_RETRIES:
-        return "compress"
-    return "retrieve"
+    return "retrieve" if state["retry_pending"] else "compress"
 
 
 def _tokenize_words(text: str) -> set[str]:
@@ -342,6 +346,7 @@ def _seed_state(query: RagQuery) -> RagState:
         candidates=[],
         sufficient=False,
         retry_count=0,
+        retry_pending=False,
         evidence=[],
     )
 

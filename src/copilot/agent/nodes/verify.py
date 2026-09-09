@@ -19,8 +19,9 @@ from langchain_core.messages import HumanMessage
 from langgraph.runtime import Runtime
 
 from copilot.agent.context import AgentContext
+from copilot.agent.prompts.synthesize import render_tool_results
 from copilot.agent.prompts.verify import VerifyOutput, build_verify_prompt
-from copilot.agent.state import AgentState, NodeEvent, SubTask
+from copilot.agent.state import AgentState, NodeEvent, SubTask, ToolCallRecord
 from copilot.rag.state import Evidence
 
 _CITATION_RE = re.compile(r"\[([^\]]+)\]")
@@ -38,7 +39,9 @@ def _locator(citation_text: str) -> str | None:
     return match.group(0) if match else None
 
 
-def _citation_resolvability(draft: str, evidence: list[Evidence]) -> float:
+def _citation_resolvability(
+    draft: str, evidence: list[Evidence], tool_calls: list[ToolCallRecord]
+) -> float:
     """The fraction of `[...]` markers in `draft` whose locator appears in
     some evidence chunk's text. No citations at all is treated as fully
     resolvable — there is nothing to contradict — so this only ever
@@ -47,7 +50,7 @@ def _citation_resolvability(draft: str, evidence: list[Evidence]) -> float:
     citations = _CITATION_RE.findall(draft)
     if not citations:
         return 1.0
-    haystack = "\n".join(e.text for e in evidence)
+    haystack = "\n".join([*(e.text for e in evidence), render_tool_results(tool_calls)])
     locators = [_locator(c) for c in citations]
     resolved = sum(1 for loc in locators if loc and loc in haystack)
     return resolved / len(citations)
@@ -56,11 +59,11 @@ def _citation_resolvability(draft: str, evidence: list[Evidence]) -> float:
 async def verify(state: AgentState, runtime: Runtime[AgentContext]) -> dict[str, object]:
     ctx = runtime.context
     draft = state["draft"] or ""
-    citation_score = _citation_resolvability(draft, state["evidence"])
+    citation_score = _citation_resolvability(draft, state["evidence"], state["tool_calls"])
 
     structured = ctx.chat_model.with_structured_output(VerifyOutput)
     output = await structured.ainvoke(
-        [HumanMessage(content=build_verify_prompt(draft, state["evidence"]))]
+        [HumanMessage(content=build_verify_prompt(draft, state["evidence"], state["tool_calls"]))]
     )
     assert isinstance(output, VerifyOutput)
 

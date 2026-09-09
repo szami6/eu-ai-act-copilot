@@ -30,7 +30,12 @@ def parse_sse(lines: Iterable[str | bytes]) -> list[tuple[str, dict[str, Any]]]:
     data_lines: list[str] = []
     for raw_line in lines:
         text = raw_line.decode("utf-8") if isinstance(raw_line, bytes) else raw_line
-        for line in text.splitlines():
+        # `requests.iter_lines()` yields a blank SSE line as `""`, and
+        # `"".splitlines()` is `[]` (zero lines) rather than one empty line —
+        # so the frame-boundary check below never fired against a real
+        # streamed response, only against literal "\n" as in the unit tests.
+        # `or [""]` restores the one-blank-line iteration in that case.
+        for line in text.splitlines() or [""]:
             if not line:
                 if event_name is not None and data_lines:
                     events.append((event_name, json.loads("\n".join(data_lines))))

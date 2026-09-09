@@ -1,10 +1,9 @@
 """Fetch raw corpus HTML (PLAN.md §5.1).
 
-Content-hash pinned: every fetch is recorded in `data/raw/manifest.json`
+Content-hash snapshotted: every fetch is recorded in `data/raw/manifest.json`
 with a sha256 of its body. Re-running ingest re-fetches everything (the
-corpus is small — a few hundred short pages) but *detects* a silent
-upstream edit by comparing against the previously recorded hash, rather
-than silently absorbing it.
+corpus is small — a few hundred short pages) and reports upstream drift;
+evaluation artifacts bind themselves to the resulting corpus manifest.
 """
 
 from __future__ import annotations

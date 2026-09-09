@@ -28,6 +28,7 @@ from copilot.agent.nodes.planner import planner
 from copilot.agent.nodes.synthesize import synthesize
 from copilot.agent.nodes.triage import route_after_triage, triage
 from copilot.agent.nodes.verify import route_after_verify, verify
+from copilot.agent.prompts.synthesize import build_synthesize_prompt
 from copilot.agent.state import AgentState, NodeEvent, SubTask, ToolCallRecord
 from copilot.agent.tools.bindings import make_tools
 from copilot.config import Settings
@@ -283,7 +284,7 @@ async def test_execute_waits_for_dependency_before_running_dependent_step(
             (
                 re.compile(r"compute a compliance timeline"),
                 '{"tier": "high_risk", "role": "provider", '
-                '"placing_on_market_date": "2026-01-01", "high_risk_basis": "annex_iii", '
+                '"placing_on_market_date": "2026-01-01", "high_risk_basis": null, '
                 '"prohibited_practice": null, "is_gpai_model": false, '
                 '"is_public_authority": false, "is_large_scale_it_system_component": false, '
                 '"generates_synthetic_content": false}',
@@ -300,6 +301,10 @@ async def test_execute_waits_for_dependency_before_running_dependent_step(
     assert first["cursor"] == 1
     first_calls = cast(list[ToolCallRecord], first["tool_calls"])
     assert [tc.tool for tc in first_calls] == ["classify_risk_tier"]
+    assert "Annex III, point 4" in first_calls[0].summary
+    prompt = build_synthesize_prompt("classify it", [], first_calls)
+    assert '"triggering_criteria"' in prompt
+    assert "Annex III, point 4" in prompt
 
     second_state = _state(plan=plan, cursor=1, tool_calls=first_calls)
     second = await execute(second_state, Runtime(context=ctx))
@@ -430,6 +435,36 @@ async def test_verify_unresolvable_citation_caps_groundedness_despite_high_llm_s
     update = await verify(state, Runtime(context=_context()))
 
     assert update["groundedness"] == 0.0
+
+
+async def test_verify_resolves_citations_from_deterministic_tool_results(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        llm_module,
+        "_FIXTURES",
+        [
+            (
+                re.compile(r"grounded"),
+                '{"groundedness": 0.9, "ungrounded_claims": [], "retry_query": null}',
+            )
+        ],
+    )
+    tool_call = ToolCallRecord(
+        step_id=0,
+        tool="classify_risk_tier",
+        input_summary="CV screener",
+        result=None,
+        summary="tier=high_risk, criteria=Annex III, point 4: employment",
+        ok=True,
+    )
+    state = _state(
+        draft="The system is high-risk. [Annex III, point 4]", tool_calls=[tool_call]
+    )
+
+    update = await verify(state, Runtime(context=_context()))
+
+    assert update["groundedness"] == 0.9
 
 
 async def test_verify_appends_retry_step_when_below_threshold_and_budget_available(

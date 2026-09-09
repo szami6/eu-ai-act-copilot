@@ -73,7 +73,7 @@ make build
 make ingest
 ```
 
-The ingestion job fetches the pinned public sources, parses their hierarchy,
+The ingestion job fetches and hashes the configured public sources, parses their hierarchy,
 builds structure-aware chunks, embeds them, upserts Qdrant, and writes
 `data/manifest.json`. Raw sources are intentionally not committed.
 
@@ -87,12 +87,24 @@ make eval-generate     # persist all 20 end-to-end outputs
 make eval-judge        # score the latest generation without rerunning it
 ```
 
+`make eval-generate` runs on the host, so it uses
+`EVAL_LLM_BASE_URL=http://localhost:8001/v1` rather than the Compose-internal
+`llm-gpu` hostname. This is a Make/shell variable, not a `.env` setting. For
+a split setup, pass the remote endpoint explicitly:
+
+```bash
+make eval-generate EVAL_LLM_BASE_URL=http://gpu-box:8001/v1
+```
+
 The end-to-end set covers six factual, four composite, four tool-required,
 three negative/refusal, and three unanswerable cases. Generation artifacts are
-JSON; the default judge reports route accuracy, refusal/abstention signals,
-required/forbidden content, citation resolvability, tool exact match, and
-latency. The dummy model is useful for graph smoke tests, not for quality
-claims.
+timestamped JSON with dataset and corpus fingerprints; the default judge rejects
+incomplete or drifted case contracts and reports route accuracy,
+refusal/abstention signals, required/forbidden content, citation presence and
+resolvability, gold-evidence recall, tool exact match, and latency. Failed model
+calls score zero and make the command exit non-zero. Retrieval evaluation also
+writes a JSON sidecar containing every ranked list. The dummy model is useful
+for graph smoke tests, not for quality claims.
 
 ## Load testing
 
