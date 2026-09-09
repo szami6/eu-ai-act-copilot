@@ -5,9 +5,13 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
+
+# Allow running directly as `python loadtest/report.py`
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from loadtest.scenario import percentile
 

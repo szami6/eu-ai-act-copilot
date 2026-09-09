@@ -51,6 +51,7 @@ services:
       # Read-only: `ingest` (its own profile/container) owns writing this
       # tree; `api` only reads manifest.json back for /health.
       - ./data:/app/data:ro
+      - hf_cache:/home/appuser/.cache
     depends_on:
       # Deliberately NOT depends_on: llm-gpu/llm-cpu (a deviation from the
       # PLAN.md §9 sketch, made while implementing it): the LLM can be local
@@ -69,7 +70,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2g
+          memory: 4g
 
   ui:
     build:
