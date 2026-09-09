@@ -65,8 +65,8 @@ The orchestrator implements autonomous decision-making, sub-task planning, and s
 6. **`finalize`**: Formats the final SSE stream payload with grounded citations and node execution trace.
 
 ### Modular RAG Subgraph
-Implemented as a separate, reusable LangGraph subgraph (`src/copilot/rag/subgraph.py`) containing 5 dedicated nodes:
-- `query_rewrite` $\to$ `retrieve` (Dense BAAI/bge-base-en-v1.5 + BM25 reciprocal-rank fusion) $\to$ `grade_documents` $\to$ `broaden_query` (on low grade) $\to$ `rerank` (BAAI/bge-reranker-base cross-encoder).
+Implemented as a dedicated, testable LangGraph subgraph ([src/copilot/rag/graph.py](file:///c:/Users/ratkaba/Desktop/szamiszar/src/copilot/rag/graph.py)) containing 5 sequential and conditional nodes:
+- `rewrite` $\to$ `retrieve` (Dense `BAAI/bge-base-en-v1.5` + BM25 reciprocal-rank fusion) $\to$ `rerank` (`BAAI/bge-reranker-base` cross-encoder) $\to$ `grade` (evaluates evidence sufficiency; conditionally routes back to `retrieve` if insufficient) $\to$ `compress` (structure-aware context compression).
 
 ### Integrated Tools (3 Tools, 2 Non-Retrieval)
 1. `rag_search`: Semantic & lexical retrieval over 1,021 structured EU AI Act chunks.
@@ -78,54 +78,61 @@ Implemented as a separate, reusable LangGraph subgraph (`src/copilot/rag/subgrap
 ## 3. Model Selection & Trade-offs
 
 To satisfy the requirement of zero paid API dependencies and full reproducibility on consumer-grade hardware:
-- **Primary Open-Source Model:** `Qwen2.5-1.5B-Instruct` (GGUF Q4_K_M) served via `llama.cpp:server` (`llm-cpu` profile).
-- **GPU Profile:** `vLLM` running `Qwen2.5-Coder-7B` / `Qwen3-8B-FP8` for high-throughput environments with $\ge$16GB VRAM.
-- **Deterministic / CI Mode:** `LLM_PROVIDER=dummy` for deterministic smoke tests, CI pipelines, and framework latency profiling without GPU hardware.
+- **Local CPU Profile:** `Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q4_K_M` served via `ghcr.io/ggml-org/llama.cpp:server` on port 8001 (`--profile cpu`).
+- **GPU Profile:** `Qwen/Qwen3-8B-AWQ` served via `vllm/vllm-openai:latest` on port 8001 (`--profile gpu`, configured in `deploy/vllm.env`).
+- **Deterministic / Framework Benchmark Mode:** `LLM_PROVIDER=dummy` (default in dev) for smoke tests, CI pipelines, and framework latency profiling without GPU hardware.
 
 ### Trade-offs
-| Aspect | 1.5B / 7B Open LLM (Local) | Commercial Paid API (e.g. GPT-4o) |
+| Aspect | Open LLM (Local 1.5B / 8B) | Commercial Paid API (e.g. GPT-4o) |
 |---|---|---|
 | **Data Privacy** | 100% on-premise; no confidential compliance data leaves the host. | Proprietary compliance policies sent to third-party servers. |
 | **Cost & Availability** | Zero inference cost; offline capable. | Pay-per-token API fees; potential rate limiting. |
-| **Hardware Fit** | Runs on laptops (8GB RAM / 4GB VRAM) via GGUF quantization. | Cloud-only. |
+| **Hardware Fit** | Runs on consumer laptops via GGUF (CPU) or 8-bit/AWQ (GPU). | Cloud-only. |
 | **Instruction Following** | Smaller parameter models require strong deterministic guardrails (our tools & verification loop). | Higher native zero-shot reasoning, but still lacks deterministic date arithmetic. |
 
 ---
 
 ## 4. Quickstart & Deployment
 
-The application is fully containerized using Docker and Docker Compose (4 services: `ui`, `api`, `llm-cpu`, `qdrant`).
+The application is fully containerized using Docker and Docker Compose (services: `ui`, `api`, `qdrant`, and optional `llm-cpu` / `llm-gpu`).
 
 ### Prerequisites
 - Docker & Docker Compose
 - Python 3.11+ and `uv` (for local evaluation/testing)
 
-### Running the Full Stack with Docker Compose
+### Running the Stack with Docker Compose
 
 ```bash
 # 1. Configure environment variables
 cp .env.example .env
 
-# 2. Start all services in the background
+# 2. Option A: Start Core Stack with Dummy LLM (for fast UI & architecture testing)
 docker compose up -d
 
+# 2. Option B: Start with Local CPU LLM (Qwen2.5-1.5B via llama.cpp)
+docker compose --profile cpu up -d
+
+# 2. Option C: Start with GPU Inference (Qwen3-8B-AWQ via vLLM; NVIDIA GPU required)
+docker compose --profile gpu up -d
+
 # 3. Access web services
-# Streamlit Web UI:     http://localhost:8501
-# FastAPI REST & Health: http://localhost:8000/health
-# Qdrant Dashboard:     http://localhost:6333/dashboard
+# Streamlit Web UI:      http://localhost:8501
+# FastAPI REST & Health:  http://localhost:8000/health
+# Qdrant Dashboard:      http://localhost:6333/dashboard
 ```
 
 ### Ingestion Pipeline (Reproducing the Vector Corpus)
 The corpus consists of 1,021 structure-aware chunks parsed from the official OJ EU AI Act text (Chapters, Articles, Paragraphs, Recitals, Annexes) stored in Qdrant with `BAAI/bge-base-en-v1.5` dense embeddings and BM25 sparse index:
 ```bash
-uv run python -m copilot.ingest.run
+uv run python -m copilot.ingest
+# or: make ingest
 ```
 
 ---
 
 ## 5. Functional Evaluation Results & Reproducibility
 
-A curated 20-question evaluation dataset (`data/eval/cases_20.json`) was compiled covering:
+A curated 20-question evaluation dataset ([data/eval/qa_set.yaml](file:///c:/Users/ratkaba/Desktop/szamiszar/data/eval/qa_set.yaml)) was compiled covering:
 - Single-hop factual queries (6 cases)
 - Multi-hop composite questions (4 cases)
 - Tool-required queries (4 cases)
@@ -136,7 +143,8 @@ A curated 20-question evaluation dataset (`data/eval/cases_20.json`) was compile
 
 ```bash
 # 1. Run isolated retrieval evaluation (24 gold queries against Qdrant corpus)
-uv run python -m evals.eval_retrieval --output evals/reports/retrieval_eval.md
+uv run python -m evals.run_eval --output evals/reports/retrieval_eval.md
+# or: make eval
 
 # 2. Run end-to-end 20-case generation through the agent pipeline
 uv run python -m evals.generate --llm-base-url http://localhost:8001/v1
@@ -145,8 +153,8 @@ uv run python -m evals.generate --llm-base-url http://localhost:8001/v1
 uv run python -m evals.judge
 ```
 
-### End-to-End Evaluation Summary (`evals.judge`)
-Tested on the complete agentic pipeline with local model serving:
+### End-to-End Evaluation Summary (`evals.judge` on 1.5B Local Model)
+Evaluated on `evals/reports/eval_a3071e8-20260909T122912Z.json`:
 
 | Metric | Measured Value | Meaning / Assessment |
 |---|---:|---|
@@ -154,40 +162,44 @@ Tested on the complete agentic pipeline with local model serving:
 | **Refusal Recall** | **100.0%** | All out-of-scope / adversarial prompts were correctly refused. |
 | **Must-Not-Include Rate** | **100.0%** | Zero hallucinated forbidden legal claims appeared in answers. |
 | **Gold Evidence Recall** | **73.3%** | Relevant statutory articles were retrieved in 73.3% of applicable cases. |
-| **False Refusal Rate** | **23.5%** | Small open-weight model occasionally abstained conservatively on complex cases. |
-| **Route Accuracy** | **40.0%** | Triage routing precision with the lightweight 1.5B model. |
+| **False Refusal Rate** | **23.5%** | Small 1.5B open model occasionally abstained conservatively on complex queries. |
+| **Route Accuracy** | **40.0%** | Triage routing accuracy with the lightweight 1.5B model. |
+| **Citation Presence Rate** | **14.3%** | Proportion of applicable answers where the 1.5B model emitted formatted citations. |
+| **Tool Exact Match Rate** | **0.0%** | Exact string match of tool outputs without post-hoc normalization. |
 
 ### Isolated Retrieval Subgraph Evaluation (24 Gold Queries)
-Evaluated with BAAI/bge-base-en-v1.5 + BM25 RRF + BAAI/bge-reranker-base:
+From `evals/reports/retrieval_eval_a3071e8-20260909T095519Z.md`:
 
-| Configuration | Recall@5 | Recall@10 | MRR | nDCG@10 |
-|---|---:|---:|---:|---:|
-| **Rerank ON (Cross-Encoder)** | **0.875** | **0.938** | **0.791** | **0.816** |
-| RRF Fusion-Only (Ablation) | 0.708 | 0.833 | 0.579 | 0.642 |
-| Production Fallback (MMR) | 0.458 | 0.625 | 0.429 | 0.510 |
+| Configuration | Precision@5 | Recall@5 | Recall@10 | MRR | nDCG@10 |
+|---|---:|---:|---:|---:|---:|
+| **Rerank ON (Cross-Encoder)** | **0.192** | **0.875** | **0.938** | **0.791** | **0.816** |
+| Ablation (RRF Fusion-Only) | 0.158 | 0.708 | — | 0.579 | — |
+| Production Fallback (MMR) | 0.100 | 0.458 | — | 0.429 | — |
 
 ### Key Conclusions from Evaluation
 1. **Reranking Impact:** The cross-encoder reranker improves Recall@5 from 0.708 to 0.875 (+23.6%) and MRR from 0.579 to 0.791 (+36.6%), proving essential for filtering noisy legal provisions.
 2. **Deterministic Safety:** Offloading Annex III risk classification and Art. 113 date calculation to deterministic tools completely prevented mathematical and classification hallucinations (100% must-not-include score).
-3. **Model Scale Trade-off:** The 1.5B model achieves 100% refusal recall on out-of-scope queries, but displays a conservative false refusal rate (23.5%) on multi-hop questions, which resolves when upgraded to 7B/8B models.
+3. **Small Model Limitations:** The lightweight 1.5B local model achieves strong guardrail compliance (100% refusal recall), but struggles with strict citation output formatting (14.3% citation presence) and exhibits conservative false refusals (23.5%), highlighting the importance of structured tool outputs and larger parameter models for production.
 
 ---
 
 ## 6. Performance & Load Testing Results & Reproducibility
 
-A simulated production load test was conducted with Locust (222 requests across all 5 query categories, streaming responses via Server-Sent Events):
+A production load test was conducted with Locust across all 5 query categories, streaming responses via Server-Sent Events.
+
+> **Note on Latency Interpretation:** To measure the baseline overhead of the application framework, LangGraph state transitions, and Qdrant retrieval independent of GPU/CPU inference speed, the Locust test was executed against `LLM_PROVIDER=dummy`. Real local model inference latency is compute-bound and discussed in Section 7.
 
 ### Reproducing the Load Test
 
 ```bash
-# 1. Run headless Locust load test (10 concurrent users, 1 minute duration)
+# 1. Run headless Locust load test (10 concurrent users, ~1-2 min duration)
 uv run locust -f loadtest/locustfile.py --host http://localhost:8000 --headless -u 10 -r 2 -t 1m --csv loadtest/reports/locust
 
 # 2. Compile metrics into loadtest/reports/loadtest.md
 uv run python loadtest/report.py
 ```
 
-### Locust Request Metrics (222 Requests)
+### Locust Framework Request Metrics (222 Requests, Dummy Baseline)
 
 | Category | Requests | Failures | Median (ms) | 95th %ile (ms) | RPS |
 |---|---:|---:|---:|---:|---:|
@@ -198,7 +210,7 @@ uv run python loadtest/report.py
 | `/chat [unanswerable_from_corpus]` | 25 | 0 | 55 ms | 66 ms | 0.57 |
 | **Aggregated Total** | **222** | **0 (0.0%)** | **57 ms** | **67 ms** | **5.02 req/s** |
 
-### Per-Node Latency Breakdown
+### Per-Node Framework Latency Breakdown
 
 | Node | Samples | Mean (ms) | Median / p50 (ms) | 95th %ile (ms) | Role |
 |---|---:|---:|---:|---:|---|
@@ -209,13 +221,15 @@ uv run python loadtest/report.py
 | **`verify`** | 255 | 3.0 | 2.0 ms | 6.3 ms | Citation verification guardrail |
 | **`finalize`** | 259 | 1.1 | 1.0 ms | 2.0 ms | State packing & SSE termination |
 
+*(Note: sample counts reflect slight carryover in `node_timings.jsonl` across consecutive runs).*
+
 ---
 
 ## 7. Bottleneck Analysis & Optimization Proposals
 
 ### 1. System Bottleneck Identification
 - **Orchestration & Vector Storage:** The LangGraph state machine and Qdrant vector retrieval introduce negligible latency (p50: 6.0 ms for `execute`, 1–4 ms for internal graph transitions). The entire application framework processes requests in under 60 ms.
-- **Primary Bottleneck (Compute-Bound Autoregressive Generation):** When connected to a real local LLM, sequential token generation accounts for **>85%** of end-to-end latency (averaging 6–8 seconds per complex multi-turn answer on consumer hardware). Memory bandwidth and compute limits during long context synthesis dominate response time.
+- **Primary Bottleneck (Compute-Bound Autoregressive Generation):** When connected to a real local LLM (CPU or GPU), sequential token generation accounts for **>85%** of end-to-end latency (averaging 6–8 seconds per complex multi-turn answer on consumer hardware). Memory bandwidth and compute limits during long context synthesis dominate response time.
 
 ### 2. Concrete Optimization Proposals
 1. **Orchestrator Chain Shortening & Early-Exit:**
@@ -223,7 +237,7 @@ uv run python loadtest/report.py
    - Implement an early-exit bypass in `verify`: if deterministic string matching confirms 100% of generated article citations resolve directly against the retrieved chunk IDs, skip the secondary LLM validation pass.
 2. **KV-Cache Prefix Caching & Model Quantization:**
    - Standardize system prompts and regulatory context prefixes across all agent nodes so that vLLM / llama.cpp can leverage **radix tree prefix caching**, avoiding re-evaluating static system instructions.
-   - Deploy 4-bit (AWQ / GGUF Q4_K_M) or FP8 quantized weights to reduce memory bandwidth bottlenecks by ~60% on consumer GPUs while maintaining legal reasoning fidelity.
+   - Deploy AWQ (as configured in `deploy/vllm.env`) or GGUF Q4_K_M quantized weights to reduce memory bandwidth bottlenecks by ~60% on consumer GPUs while maintaining legal reasoning fidelity.
 
 ---
 
